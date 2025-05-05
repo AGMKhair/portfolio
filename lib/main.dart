@@ -5,8 +5,12 @@ import 'package:provider/provider.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => AppViewModel(),
+    MultiProvider(
+      providers:  [
+        ChangeNotifierProvider(
+          create: (_) => AppViewModel(),
+        ),
+      ],
       child: MyApp(),
     ),
   );
