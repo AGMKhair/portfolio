@@ -1,34 +1,20 @@
-import 'package:flutter/widgets.dart';
-import '../core/enums/device_screen_type.dart';
-import '../core/models/sizing_information.dart';
+import 'package:flutter/material.dart';
 
-DeviceScreenType getDeviceType(MediaQueryData mediaQuery) {
-  double deviceWidth = mediaQuery.size.width;
-
-  if (deviceWidth > 950) {
-    return DeviceScreenType.Desktop;
-  } else if (deviceWidth > 600) {
-    return DeviceScreenType.Tablet;
-  } else {
-    return DeviceScreenType.Mobile;
+class ResponsiveBuilder {
+  static double dynamicWidth(BuildContext context, {double percent = 0.1}) {
+    return MediaQuery.of(context).size.width * percent;
   }
-}
 
-class ResponsiveBuilder extends StatelessWidget {
-  final Widget Function(BuildContext context, SizingInformation sizingInformation) builder;
-
-  const ResponsiveBuilder({Key? key, required this.builder}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    var mediaQuery = MediaQuery.of(context);
-    var sizingInformation = SizingInformation(
-      orientation: mediaQuery.orientation,
-      deviceType: getDeviceType(mediaQuery),
-      screenSize: mediaQuery.size,
-      localWidgetSize: Size.zero,
-    );
-
-    return builder(context, sizingInformation);
+  static double dynamicHeight(BuildContext context, {double percent = 0.1}) {
+    return MediaQuery.of(context).size.height * percent;
   }
+
+  static double dynamicSize(BuildContext context, {double size = 0.1}) {
+    return MediaQuery.of(context).size.width * size;
+  }
+
+  static bool isMobile(BuildContext context) {
+      return  MediaQuery.sizeOf(context).width < 800;
+  }
+
 }
