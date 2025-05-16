@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../providers/navigation_provider.dart';
 
 class AppMenu extends StatelessWidget {
   const AppMenu({super.key});
 
   final List<String> items = const [
-    'Home', 'About', 'Projects', 'Blog', 'Services', 'Contact'
+    'Home',
+    'About',
+    'Projects',
+    'Blog',
+    'Services',
+    'Contact'
   ];
 
   @override
@@ -14,17 +20,22 @@ class AppMenu extends StatelessWidget {
     final provider = context.watch<NavigationProvider>();
 
     return Row(
-      children: List.generate(items.length, (index) {
-        return TextButton(
-          onPressed: () => context.read<NavigationProvider>().setIndex(index),
-          child: Text(
-            items[index],
-            style: TextStyle(
-              color: provider.currentIndex == index ? Colors.amber : Colors.white,
+      children: List.generate(
+        items.length,
+        (index) {
+          return TextButton(
+            onPressed: () => context.read<NavigationProvider>().setIndex(index),
+            child: Text(
+              items[index],
+              style: TextStyle(
+                color: provider.currentIndex == index
+                    ? Colors.amber
+                    : Colors.white,
+              ),
             ),
-          ),
-        );
-      }),
+          );
+        },
+      ),
     );
   }
 }

@@ -1,0 +1,49 @@
+import 'package:flutter/material.dart';
+import 'package:portfolio/providers/navigation_provider.dart';
+import 'package:portfolio/ui/views/about_screen.dart';
+import 'package:portfolio/ui/views/blog/blog_screen.dart';
+import 'package:portfolio/ui/views/home_screen.dart';
+import 'package:portfolio/ui/views/projects_screen.dart';
+import 'package:portfolio/utils/responsive_builder.dart';
+import 'package:portfolio/widgets/app_menu.dart';
+import 'package:portfolio/widgets/social_links.dart';
+import 'package:provider/provider.dart';
+
+class PortfolioScreen extends StatefulWidget {
+  const PortfolioScreen({super.key});
+
+  @override
+  State<PortfolioScreen> createState() => _PortfolioScreenState();
+}
+
+class _PortfolioScreenState extends State<PortfolioScreen> {
+
+
+  static final pages = [
+    HomeScreen(),
+    AboutScreen(),
+    ProjectsScreen(),
+    BlogScreen(),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final currentIndex = context.watch<NavigationProvider>().currentIndex;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('My Portfolio'),
+        actions: ResponsiveBuilder.isMobile(context)
+            ? null
+            : const [AppMenu(), SocialLinks()],
+      ),
+      drawer: ResponsiveBuilder.isMobile(context)
+          ? const Drawer(child: DrawerMenu())
+          : null,
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 300),
+        child: pages[currentIndex],
+      ),
+    );
+  }
+}
