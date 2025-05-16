@@ -19,7 +19,13 @@ class BlogScreen extends StatelessWidget {
           }
 
           final blogs = blogProvider.blogs;
-          final categories = blogs.map((blog) => blog['category']).toSet().toList();
+          final categories = blogs
+              .map((blog) => blog['category'])
+              .where((category) => category is String && category.isNotEmpty)
+              .cast<String>()
+              .toSet()
+              .toList();
+          // final categories = blogs.map((blog) => blog['category']).toSet().toList();
 
           return Column(
             children: [
@@ -29,8 +35,8 @@ class BlogScreen extends StatelessWidget {
                   hint: const Text('Filter by Category'),
                   items: categories.map((category) => DropdownMenuItem(
                     value: category,
-                    child: Text(category),
-                  )).toList(),
+                    child: Text(category),)
+                  ).toList(),
                   onChanged: (value) {
                     // Implement category filter
                   },
