@@ -40,15 +40,3 @@ class AppMenu extends StatelessWidget {
   }
 }
 
-class DrawerMenu extends StatelessWidget {
-  const DrawerMenu({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      children: const [
-        AppMenu(),
-      ],
-    );
-  }
-}

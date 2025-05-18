@@ -1,11 +1,16 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:portfolio/providers/navigation_provider.dart';
 import 'package:portfolio/ui/views/about_screen.dart';
 import 'package:portfolio/ui/views/blog/blog_screen.dart';
+import 'package:portfolio/ui/views/contact/contact_screen.dart';
 import 'package:portfolio/ui/views/home_screen.dart';
 import 'package:portfolio/ui/views/projects_screen.dart';
+import 'package:portfolio/ui/views/service/service_screen.dart';
 import 'package:portfolio/utils/responsive_builder.dart';
 import 'package:portfolio/widgets/app_menu.dart';
+import 'package:portfolio/widgets/drawer_menu.dart';
 import 'package:portfolio/widgets/social_links.dart';
 import 'package:provider/provider.dart';
 
@@ -24,6 +29,8 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
     AboutScreen(),
     ProjectsScreen(),
     BlogScreen(),
+    ServicesScreen(),
+    ContactScreen(),
   ];
 
   @override
@@ -32,6 +39,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.blueGrey,
         title: const Text('My Portfolio'),
         actions: ResponsiveBuilder.isMobile(context)
             ? null
