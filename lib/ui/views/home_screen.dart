@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/utils/responsive_builder.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatelessWidget with ResponsiveBuilder{
   const HomeScreen({super.key});
 
   @override
@@ -9,7 +9,7 @@ class HomeScreen extends StatelessWidget {
     return Center(
       child: Text(
         'Welcome to My Home Page',
-        style: TextStyle(fontSize: ResponsiveBuilder.dynamicSize(context, size: 0.035)),
+        style: TextStyle(fontSize: dynamicSize(context)),
       ),
     );
   }

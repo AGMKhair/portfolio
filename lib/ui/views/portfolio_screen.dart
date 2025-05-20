@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:portfolio/providers/navigation_provider.dart';
 import 'package:portfolio/ui/views/about_screen.dart';
@@ -8,7 +6,7 @@ import 'package:portfolio/ui/views/contact/contact_screen.dart';
 import 'package:portfolio/ui/views/home_screen.dart';
 import 'package:portfolio/ui/views/projects_screen.dart';
 import 'package:portfolio/ui/views/service/service_screen.dart';
-import 'package:portfolio/utils/responsive_builder.dart';
+import 'package:portfolio/utils/size_extensions.dart';
 import 'package:portfolio/widgets/app_menu.dart';
 import 'package:portfolio/widgets/drawer_menu.dart';
 import 'package:portfolio/widgets/social_links.dart';
@@ -22,8 +20,6 @@ class PortfolioScreen extends StatefulWidget {
 }
 
 class _PortfolioScreenState extends State<PortfolioScreen> {
-
-
   static final pages = [
     HomeScreen(),
     AboutScreen(),
@@ -40,14 +36,14 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueGrey,
-        title: const Text('My Portfolio'),
-        actions: ResponsiveBuilder.isMobile(context)
-            ? null
-            : const [AppMenu(), SocialLinks()],
+        title: Text(
+          'AGM Khair Sabbir Portfolio',
+          style:
+              TextStyle(color: Colors.white, fontSize: context.isMobile ? context.contentSize : context.titleSizeWebsite),
+        ),
+        actions: context.isMobile ? null : const [AppMenu(), SocialLinks()],
       ),
-      drawer: ResponsiveBuilder.isMobile(context)
-          ? const Drawer(child: DrawerMenu())
-          : null,
+      drawer: context.isMobile ? const Drawer(child: DrawerMenu()) : null,
       body: AnimatedSwitcher(
         duration: const Duration(milliseconds: 300),
         child: pages[currentIndex],
