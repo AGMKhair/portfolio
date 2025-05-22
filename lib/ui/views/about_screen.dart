@@ -29,7 +29,7 @@ class AboutScreen extends StatelessWidget  with ResponsiveBuilder{
                 children: [
                   CircleAvatar(
                     radius: dynamicSize(context, 0.15),
-                    backgroundImage: AssetImage('assets/profile.jpg'), // Replace with your image asset
+                    backgroundImage: AssetImage('assets/images/logo.png'),
                   ),
                   SizedBox(height: context.spacing),
                   Text(
