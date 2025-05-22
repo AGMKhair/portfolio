@@ -15,6 +15,7 @@ extension SizeExtension on BuildContext {
   double get titleSize => dynamicSize(this, 0.06);
   double get sectionTitleSize => dynamicSize(this, 0.045);
   double get contentSize => dynamicSize(this, 0.035);
+  double get textSize => dynamicSize(this, 0.065);
   double get titleSizeWebsite => dynamicSize(this, 0.02);
   bool get isMobile => isMobileSize(this);
 }
