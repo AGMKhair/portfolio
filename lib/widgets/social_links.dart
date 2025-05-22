@@ -15,20 +15,24 @@ class SocialLinks extends StatelessWidget {
     return Row(
       children: [
         IconButton(
+          color: Colors.white,
           icon: const FaIcon(FontAwesomeIcons.linkedin),
-          onPressed: () => _launch('https://linkedin.com/in/yourusername'),
+          onPressed: () => _launch('https://www.linkedin.com/in/agmkhair'),
         ),
         IconButton(
+          color: Colors.white,
           icon: const FaIcon(FontAwesomeIcons.facebook),
-          onPressed: () => _launch('https://facebook.com/yourusername'),
+          onPressed: () => _launch('https://www.facebook.com/agm.khair.sabbir.2025'),
         ),
         IconButton(
+          color: Colors.white,
           icon: const FaIcon(FontAwesomeIcons.instagram),
-          onPressed: () => _launch('https://instagram.com/yourusername'),
+          onPressed: () => _launch('https://www.instagram.com/agmkhair_'),
         ),
         IconButton(
+          color: Colors.white,
           icon: const FaIcon(FontAwesomeIcons.github),
-          onPressed: () => _launch('https://github.com/yourusername'),
+          onPressed: () => _launch('https://github.com/agmkhair'),
         ),
       ],
     );
