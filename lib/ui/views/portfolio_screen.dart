@@ -36,10 +36,16 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueGrey,
-        title: Text(
-          'AGM Khair Sabbir Portfolio',
-          style:
-              TextStyle(color: Colors.white, fontSize: context.isMobile ? context.contentSize : context.titleSizeWebsite),
+        title: Row(
+          children: [
+         Image.asset('assets/images/logo.png',height: 100,width: 100,),
+
+            Text(
+              ' Portfolio',
+              style:
+                  TextStyle(color: Colors.white, fontSize: context.isMobile ? context.contentSize : context.titleSizeWebsite),
+            ),
+          ],
         ),
         actions: context.isMobile ? null : const [AppMenu(), SocialLinks()],
       ),
