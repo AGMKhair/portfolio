@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'AGM Khair Sabbir Portfolio',
+      title: 'AGM Khair Sabbir',
       initialRoute: AppRoutes.home, // Use route from AppRoutes
       routes: AppRoutes.getRoutes(), // Use routes from AppRoutes
     );
