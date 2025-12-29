@@ -36,7 +36,7 @@ class AboutScreen extends StatelessWidget {
 
           // Role (calm, not loud)
           Text(
-            'Senior Flutter & Mobile Application Engineer',
+            'Software Engineer | Mobile (Flutter, Java, Kotlin) & Backend (Spring Boot)',
             textAlign: TextAlign.center,
             style: TextStyle(
               // fontSize: context.contentSize,

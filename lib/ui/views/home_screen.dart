@@ -22,35 +22,71 @@ class HomeScreen extends StatelessWidget {
         children: [
           // ===== HERO =====
           Text(
-            'Hi, I’m AGM Khair Sabbir 👋',
+            'Hi, I’m',
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: isMobile ? 28 : 46,
-              fontWeight: FontWeight.bold,
+              fontSize: isMobile ? 16 : 18,
+              color: Colors.blueGrey,
             ),
           ),
-          const SizedBox(height: 12),
 
+          const SizedBox(height: 6),
+
+          // ===== NAME =====
+          Text(
+            'AGM Khair Sabbir',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: isMobile ? 32 : 42, // 🔥 slightly reduced (classy)
+              fontWeight: FontWeight.bold,
+              letterSpacing: 0.5,
+            ),
+          ),
+
+          const SizedBox(height: 10),
+
+          // ===== ROLE =====
           Text(
             'Senior Flutter & Mobile Application Engineer',
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: isMobile ? 16 : 22,
-              color: Colors.blueGrey,
+              fontSize: isMobile ? 15 : 20,
+              color: Colors.blueGrey.shade700,
               fontWeight: FontWeight.w600,
             ),
           ),
-          const SizedBox(height: 20),
 
-          Text(
-            'I design and build reliable, scalable, and high-performance mobile applications '
-                'for businesses, startups, and enterprises.',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              height: 1.6,
+          const SizedBox(height: 18),
+
+          // ===== VALUE STATEMENT =====
+          SizedBox(
+            width: isMobile ? double.infinity : 620,
+            child: Text(
+              'I help businesses and startups build reliable, scalable, and '
+                  'high-performance mobile applications that users trust.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: isMobile ? 14 : 16,
+                height: 1.7,
+                color: Colors.grey.shade800,
+              ),
             ),
           ),
 
+          const SizedBox(height: 28),
+
+          // ===== TRUST BADGES =====
+          Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 14,
+            runSpacing: 10,
+            children: const [
+              _HeroBadge('5+ Years Experience'),
+              _HeroBadge('1M+ Users Impacted'),
+              _HeroBadge('Fintech & Banking'),
+              _HeroBadge('Flutter Specialist'),
+            ],
+          ),
           const SizedBox(height: 35),
 
           // ===== CTA =====
@@ -82,21 +118,6 @@ class HomeScreen extends StatelessWidget {
           ),
 
           const SizedBox(height: 70),
-
-          // ===== TRUST =====
-          Wrap(
-            alignment: WrapAlignment.center,
-            spacing: 18,
-            runSpacing: 18,
-            children: const [
-              _StatCard(title: '5+ Years', subtitle: 'Experience'),
-              _StatCard(title: '1M+', subtitle: 'Users Impacted'),
-              _StatCard(title: 'Fintech', subtitle: 'Banking Apps'),
-              _StatCard(title: 'Flutter', subtitle: 'Specialist'),
-            ],
-          ),
-
-          const SizedBox(height: 80),
 
           // ===== WHAT I BUILD =====
           Text(
@@ -308,6 +329,32 @@ class _FeatureCard extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+
+class _HeroBadge extends StatelessWidget {
+  final String text;
+
+  const _HeroBadge(this.text);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+      decoration: BoxDecoration(
+        color: Colors.blueGrey.shade50,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Colors.blueGrey.shade100),
+      ),
+      child: Text(
+        text,
+        style: const TextStyle(
+          fontSize: 13,
+          fontWeight: FontWeight.w500,
+        ),
       ),
     );
   }
