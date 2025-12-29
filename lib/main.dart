@@ -31,8 +31,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'AGM Khair Sabbir',
-      initialRoute: AppRoutes.home, // Use route from AppRoutes
-      routes: AppRoutes.getRoutes(), // Use routes from AppRoutes
+      initialRoute: AppRoutes.home,
+      routes: AppRoutes.getRoutes(),
     );
   }
 }

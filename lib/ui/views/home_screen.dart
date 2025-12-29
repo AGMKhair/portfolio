@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio/providers/navigation_provider.dart';
+import 'package:portfolio/ui/views/contact/contact_screen.dart';
+import 'package:portfolio/ui/views/projects_screen.dart';
 import 'package:portfolio/utils/size_extensions.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -43,7 +47,6 @@ class HomeScreen extends StatelessWidget {
                 'for businesses, startups, and enterprises.',
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: context.contentSize,
               height: 1.6,
             ),
           ),
@@ -57,8 +60,10 @@ class HomeScreen extends StatelessWidget {
             runSpacing: 12,
             children: [
               ElevatedButton(
-                onPressed: () {
-                  // TODO: Navigate to Projects
+                onPressed: ()
+                {
+                  context.read<NavigationProvider>().setIndex(2);
+
                 },
                 style: ElevatedButton.styleFrom(
                   padding:
@@ -67,8 +72,9 @@ class HomeScreen extends StatelessWidget {
                 child: const Text('View My Work'),
               ),
               OutlinedButton(
-                onPressed: () {
-                  // TODO: Navigate to Contact
+                onPressed: ()
+                {
+                  context.read<NavigationProvider>().setIndex(5);
                 },
                 child: const Text('Contact Me'),
               ),
@@ -133,6 +139,8 @@ class HomeScreen extends StatelessWidget {
 
           const SizedBox(height: 80),
 
+          ProjectsScreen(),
+
           // ===== WHY ME =====
           Text(
             'Why Work With Me?',
@@ -150,7 +158,6 @@ class HomeScreen extends StatelessWidget {
                 'My clients trust me because I deliver what I promise — on time and with care.',
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: context.contentSize,
               height: 1.6,
             ),
           ),
@@ -179,11 +186,11 @@ class HomeScreen extends StatelessWidget {
                   'Let’s discuss your idea and build something great together.',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: context.contentSize,
+                    // fontSize: context.contentSize,
                   ),
                 ),
                 const SizedBox(height: 24),
-                ElevatedButton(
+             /*   ElevatedButton(
                   onPressed: () {
                     // TODO: Navigate to Contact page
                   },
@@ -192,10 +199,13 @@ class HomeScreen extends StatelessWidget {
                         horizontal: 30, vertical: 16),
                   ),
                   child: const Text('Get in Touch'),
-                ),
+                ),*/
               ],
             ),
           ),
+
+          ContactScreen(),
+
         ],
       ),
     );

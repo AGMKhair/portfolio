@@ -37,15 +37,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
       appBar: AppBar(
         backgroundColor: Colors.blueGrey,
         title: Row(
-          children: [
-         Image.asset('assets/images/logo.png',height: 100,width: 100,),
-
-            Text(
-              ' Portfolio',
-              style:
-                  TextStyle(color: Colors.white, fontSize: context.isMobile ? context.contentSize : context.titleSizeWebsite),
-            ),
-          ],
+          children: [ Image.asset('assets/images/logo.png',height: 100,width: 100,) ],
         ),
         actions: context.isMobile ? null : const [AppMenu(), SocialLinks()],
       ),

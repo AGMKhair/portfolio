@@ -39,7 +39,7 @@ class AboutScreen extends StatelessWidget {
             'Senior Flutter & Mobile Application Engineer',
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: context.contentSize,
+              // fontSize: context.contentSize,
               color: Colors.grey[700],
             ),
           ),
@@ -52,7 +52,7 @@ class AboutScreen extends StatelessWidget {
                 'mobile applications using Flutter and Android.',
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: context.contentSize,
+              // fontSize: context.contentSize,
               height: 1.6,
             ),
           ),
@@ -127,7 +127,7 @@ class AboutScreen extends StatelessWidget {
                   'and delivers quality work on time — you can rely on me.”',
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: context.contentSize,
+                // fontSize: context.contentSize,
                 fontStyle: FontStyle.italic,
               ),
             ),
@@ -158,7 +158,7 @@ class AboutScreen extends StatelessWidget {
       text,
       textAlign: TextAlign.center,
       style: TextStyle(
-        fontSize: context.contentSize,
+        // fontSize: context.contentSize,
         height: 1.6,
       ),
     );

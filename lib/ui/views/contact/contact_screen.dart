@@ -1,9 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/providers/contact_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactScreen extends StatelessWidget {
   const ContactScreen({super.key});
+
+
+  Future<void> _sendEmail({
+    required String name,
+    required String email,
+    required String message,
+  }) async {
+    final Uri emailUri = Uri(
+      scheme: 'mailto',
+      path: 'agmkhair@gmail.com',
+      queryParameters: {
+        'subject': 'Contact from Portfolio Website',
+        'body': '''
+Name: $name
+Email: $email
+
+Message:
+$message
+'''
+      },
+    );
+
+    if (!await launchUrl(emailUri)) {
+      throw 'Could not launch email client';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -169,15 +196,16 @@ class ContactScreen extends StatelessWidget {
                 }
 
                 try {
-                  await provider.submitContactForm(
-                    nameController.text,
-                    emailController.text,
-                    messageController.text,
+                  await _sendEmail(
+                    name: nameController.text,
+                    email: emailController.text,
+                    message: messageController.text,
                   );
 
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
-                        content: Text('Message sent successfully!')),
+                      content: Text('Email client opened. Please send the message.'),
+                    ),
                   );
 
                   nameController.clear();
@@ -185,15 +213,16 @@ class ContactScreen extends StatelessWidget {
                   messageController.clear();
                 } catch (e) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Error: $e')),
+                    const SnackBar(content: Text('Could not open email app')),
                   );
                 }
               },
+
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 16),
               ),
               child: const Text(
-                'Send Message',
+                'Send via Email',
                 style: TextStyle(fontSize: 16),
               ),
             ),
