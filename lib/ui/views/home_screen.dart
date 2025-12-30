@@ -3,6 +3,9 @@ import 'package:portfolio/providers/navigation_provider.dart';
 import 'package:portfolio/ui/views/contact/contact_screen.dart';
 import 'package:portfolio/ui/views/projects_screen.dart';
 import 'package:portfolio/utils/size_extensions.dart';
+import 'package:portfolio/utils/utils.dart';
+import 'package:portfolio/widgets/feeature_card_widget.dart';
+import 'package:portfolio/widgets/hero_badge_widget.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -81,10 +84,11 @@ class HomeScreen extends StatelessWidget {
             spacing: 14,
             runSpacing: 10,
             children: const [
-              _HeroBadge('5+ Years Experience'),
-              _HeroBadge('1M+ Users Impacted'),
-              _HeroBadge('Fintech & Banking'),
-              _HeroBadge('Flutter Specialist'),
+              HeroBadge('5+ Years Experience'),
+              HeroBadge('Large-Scale Production Apps'),
+              HeroBadge('Fintech & Banking'),
+              HeroBadge('Flutter Specialist'),
+
             ],
           ),
           const SizedBox(height: 35),
@@ -135,26 +139,60 @@ class HomeScreen extends StatelessWidget {
             spacing: 20,
             runSpacing: 20,
             children: const [
-              _FeatureCard(
+              FeatureCard(
                 title: 'Flutter Mobile Apps',
                 description:
-                'Clean, scalable, and production-ready cross-platform applications.',
+                'Clean, scalable, and production-ready cross-platform mobile applications '
+                    'built with Flutter.',
               ),
-              _FeatureCard(
+
+              FeatureCard(
                 title: 'Android (Java / Kotlin)',
                 description:
-                'High-performance native Android applications.',
+                'High-performance native Android applications with modern architecture '
+                    'and long-term maintainability.',
               ),
-              _FeatureCard(
-                title: 'Banking & Fintech',
+
+              FeatureCard(
+                title: 'Website',
                 description:
-                'Secure enterprise-grade financial applications.',
+                'Fast, responsive websites and web applications with clean UI, '
+                    'optimized performance, and maintainable code.',
               ),
-              _FeatureCard(
-                title: 'Firebase & APIs',
+
+              FeatureCard(
+                title: 'Backend, Firebase & APIs',
                 description:
-                'Authentication, notifications, analytics, and REST APIs.',
+                'Spring Boot backend services, Firebase integration, authentication, '
+                    'notifications, analytics, and RESTful APIs.',
               ),
+
+              FeatureCard(
+                title: 'Enterprise & Industry Solutions',
+                description:
+                'Secure, scalable solutions for industries including banking, fintech, '
+                    'e-commerce, and enterprise platforms.',
+              ),
+
+              FeatureCard(
+                title: 'Research',
+                description:
+                'Project research, feasibility analysis, and solution design using '
+                    'any suitable programming language or technology based on project needs.',
+              ),
+              FeatureCard(
+                title: 'App Deployment & Support',
+                description:
+                'Play Store deployment, release management, bug fixing, updates, '
+                    'and long-term application support.',
+              ),
+              FeatureCard(
+                title: 'Consultation & Planning',
+                description:
+                'Technical consultation, project planning, and architecture guidance '
+                    'to help you make the right decisions.',
+              ),
+
             ],
           ),
 
@@ -211,16 +249,18 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 24),
-             /*   ElevatedButton(
+                ElevatedButton(
                   onPressed: () {
-                    // TODO: Navigate to Contact page
+                    launch(
+                      'https://wa.me/8801823585800?text=Hello%20AGM%20Khair,%20I%20found%20your%20portfolio%20and%20would%20like%20to%20discuss%20a%20project.',
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 30, vertical: 16),
                   ),
                   child: const Text('Get in Touch'),
-                ),*/
+                ),
               ],
             ),
           ),
@@ -284,78 +324,5 @@ class _StatCard extends StatelessWidget {
   }
 }
 
-class _FeatureCard extends StatelessWidget {
-  final String title;
-  final String description;
-
-  const _FeatureCard({
-    required this.title,
-    required this.description,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: context.isMobile ? double.infinity : 260,
-      padding: const EdgeInsets.all(22),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.06),
-            blurRadius: 12,
-            offset: const Offset(0, 8),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            description,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 14,
-              height: 1.5,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
 
 
-class _HeroBadge extends StatelessWidget {
-  final String text;
-
-  const _HeroBadge(this.text);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-      decoration: BoxDecoration(
-        color: Colors.blueGrey.shade50,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.blueGrey.shade100),
-      ),
-      child: Text(
-        text,
-        style: const TextStyle(
-          fontSize: 13,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-    );
-  }
-}

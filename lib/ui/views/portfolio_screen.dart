@@ -7,6 +7,7 @@ import 'package:portfolio/ui/views/home_screen.dart';
 import 'package:portfolio/ui/views/projects_screen.dart';
 import 'package:portfolio/ui/views/service/service_screen.dart';
 import 'package:portfolio/utils/size_extensions.dart';
+import 'package:portfolio/widgets/app_footer.dart';
 import 'package:portfolio/widgets/app_menu.dart';
 import 'package:portfolio/widgets/drawer_menu.dart';
 import 'package:portfolio/widgets/social_links.dart';
@@ -44,7 +45,15 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
       drawer: context.isMobile ? const Drawer(child: DrawerMenu()) : null,
       body: AnimatedSwitcher(
         duration: const Duration(milliseconds: 300),
-        child: pages[currentIndex],
+        child: SingleChildScrollView(
+          key: ValueKey(currentIndex),
+          child: Column(
+            children: [
+              pages[currentIndex],
+              const AppFooter(),
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/utils/size_extensions.dart';
+import 'package:portfolio/widgets/hero_badge_widget.dart';
+import 'package:portfolio/widgets/skill_chip_widget.dart';
+import 'package:portfolio/widgets/trust_cart_widget.dart';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
@@ -65,10 +68,15 @@ class AboutScreen extends StatelessWidget {
             spacing: 14,
             runSpacing: 14,
             children: const [
-              _TrustCard(title: '5+ Years', subtitle: 'Experience'),
-              _TrustCard(title: '1M+ Users', subtitle: 'Impact'),
-              _TrustCard(title: 'Banking', subtitle: 'Fintech & Enterprise'),
-              _TrustCard(title: 'Flutter', subtitle: 'Specialist'),
+              HeroBadge('5+ Years Experience'),
+              HeroBadge('Large-Scale Production Apps'),
+              HeroBadge('Fintech & Banking'),
+              HeroBadge('Flutter Specialist'),
+
+              // TrustCard(title: '5+ Years', subtitle: 'Experience'),
+              // TrustCard(title: 'Large-Scale Apps', subtitle: 'Production Ready'),
+              // TrustCard(title: 'Fintech & Banking', subtitle: 'Enterprise Systems'),
+              // TrustCard(title: 'Flutter', subtitle: 'Specialist'),
             ],
           ),
 
@@ -92,12 +100,15 @@ class AboutScreen extends StatelessWidget {
             spacing: 10,
             runSpacing: 10,
             children: const [
-              _SkillChip('Flutter App Development'),
-              _SkillChip('Android (Java / Kotlin)'),
-              _SkillChip('Firebase & REST APIs'),
-              _SkillChip('Fintech & Banking Apps'),
-              _SkillChip('Performance Optimization'),
-              _SkillChip('App Maintenance'),
+              SkillChip('Flutter App Development'),
+              SkillChip('Android (Java / Kotlin)'),
+              SkillChip('Backend Development (Spring Boot)'),
+              SkillChip('Firebase & REST APIs'),
+              SkillChip('Fintech & Banking Systems'),
+              SkillChip('Performance Optimization'),
+              SkillChip('App Deployment & Maintenance'),
+              SkillChip('Technical Research & Planning'),
+
             ],
           ),
 
@@ -165,67 +176,3 @@ class AboutScreen extends StatelessWidget {
   }
 }
 
-// ================= COMPONENTS =================
-
-class _TrustCard extends StatelessWidget {
-  final String title;
-  final String subtitle;
-
-  const _TrustCard({
-    required this.title,
-    required this.subtitle,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 165,
-      padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.06),
-            blurRadius: 12,
-            offset: const Offset(0, 8),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            subtitle,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 12,
-              color: Colors.grey,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _SkillChip extends StatelessWidget {
-  final String label;
-
-  const _SkillChip(this.label);
-
-  @override
-  Widget build(BuildContext context) {
-    return Chip(
-      label: Text(label),
-      backgroundColor: Colors.blueGrey.shade50,
-    );
-  }
-}

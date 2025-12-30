@@ -4,7 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 class ProjectsScreen extends StatelessWidget {
   const ProjectsScreen({super.key});
 
-  void _launch(String url) async {
+  void launch(String url) async {
     final uri = Uri.parse(url);
     if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
       throw 'Could not launch $url';
@@ -104,7 +104,7 @@ class _ProjectCard extends StatelessWidget {
     this.video,
   });
 
-  void _launch(String url) async {
+  void launch(String url) async {
     final uri = Uri.parse(url);
     if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
       throw 'Could not launch $url';
@@ -200,19 +200,19 @@ class _ProjectCard extends StatelessWidget {
                           _ActionButton(
                             icon: Icons.shop,
                             label: 'Play Store',
-                            onTap: () => _launch(playStore!),
+                            onTap: () => launch(playStore!),
                           ),
                         if (apk != null)
                           _ActionButton(
                             icon: Icons.download,
                             label: 'APK',
-                            onTap: () => _launch(apk!),
+                            onTap: () => launch(apk!),
                           ),
                         if (video != null)
                           _ActionButton(
                             icon: Icons.play_circle,
                             label: 'Demo',
-                            onTap: () => _launch(video!),
+                            onTap: () => launch(video!),
                           ),
                       ],
                     ),
