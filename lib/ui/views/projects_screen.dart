@@ -3,6 +3,7 @@ import 'package:portfolio/core/models/project.dart';
 import 'package:portfolio/ui/data/company_projects.dart';
 import 'package:portfolio/ui/data/personal_project.dart';
 import 'package:portfolio/ui/data/website_projects.dart';
+import 'package:portfolio/widgets/project_card_widget.dart';
 import 'package:portfolio/widgets/project_image_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -66,8 +67,6 @@ class ProjectsScreen extends StatelessWidget {
     );
   }
 
-  // ================= HELPERS =================
-
   Widget _sectionTitle(String title, String des) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 24),
@@ -101,117 +100,9 @@ class ProjectsScreen extends StatelessWidget {
         mainAxisSpacing: 24,
         childAspectRatio: isMobile ?  isHome ?  0.8 : 0.85 : isHome ? .8 :  1.1,
       ),
-      itemBuilder: (_, i) => _ProjectCard(
+      itemBuilder: (_, i) => ProjectCard(
         project: data[i],
         onLaunch: _launch,
-      ),
-    );
-  }
-}
-
-// ================= PROJECT CARD =================
-
-class _ProjectCard extends StatefulWidget {
-  final Project project;
-  final Function(String) onLaunch;
-
-  const _ProjectCard({
-    required this.project,
-    required this.onLaunch,
-  });
-
-  @override
-  State<_ProjectCard> createState() => _ProjectCardState();
-}
-
-class _ProjectCardState extends State<_ProjectCard> {
-  bool hover = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (_) => setState(() => hover = true),
-      onExit: (_) => setState(() => hover = false),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        transform: hover
-            ? (Matrix4.identity()..translate(0, -6))
-            : Matrix4.identity(),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(18),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(hover ? 0.12 : 0.08),
-              blurRadius: 22,
-              offset: const Offset(0, 12),
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            ProjectImage(project: widget.project),
-
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    widget.project.title,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-
-                  if (widget.project.company != null)
-                    Text(
-                      widget.project.company!,
-                      style: const TextStyle(
-                        fontSize: 13,
-                        color: Colors.grey,
-                      ),
-                    ),
-
-                  const SizedBox(height: 8),
-
-                  Text(
-                    widget.project.description,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 14, height: 1.5),
-                  ),
-
-                  const SizedBox(height: 10),
-
-                  Text(
-                    widget.project.tech,
-                    style: const TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.blueGrey,
-                    ),
-                  ),
-
-                  const SizedBox(height: 14),
-
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 6,
-                    children: widget.project.links.map((link) {
-                      return OutlinedButton.icon(
-                        onPressed: () => widget.onLaunch(link.url),
-                        icon: Icon(link.icon, size: 18),
-                        label: Text(link.label),
-                      );
-                    }).toList(),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
