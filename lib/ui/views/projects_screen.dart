@@ -1,83 +1,103 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 class ProjectsScreen extends StatelessWidget {
   const ProjectsScreen({super.key});
 
-  void launch(String url) async {
+  void _launch(String url) async {
     final uri = Uri.parse(url);
-    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
-      throw 'Could not launch $url';
-    }
+    await launchUrl(uri, mode: LaunchMode.externalApplication);
   }
 
   @override
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 900;
 
-    return Padding(
+    return SingleChildScrollView(
       padding: EdgeInsets.symmetric(
-        horizontal: isMobile ? 16 : 80,
-        vertical: 50,
+        horizontal: isMobile ? 16 : 100,
+        vertical: 60,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // ===== TITLE =====
-          Text(
+          // ===== PAGE HEADER =====
+          const Text(
             'Projects',
-            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 12),
           const Text(
-            'A selection of my professional and personal projects.',
+            'Production apps, client projects, and web solutions.',
             style: TextStyle(fontSize: 16, color: Colors.grey),
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 50),
 
-          // ===== PROJECT GRID =====
-          GridView.count(
-            crossAxisCount: isMobile ? 1 : 3,
-            crossAxisSpacing: 24,
-            mainAxisSpacing: 24,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            children: [
-              _ProjectCard(
-                title: 'Campus Guide App',
-                description:
-                'Award-winning student application featuring campus maps, notices, and utilities.',
-                image:
-                'https://yourserver.com/campus1.jpg',
-                tech: 'Flutter • Firebase',
-                playStore:
-                'https://play.google.com/store/apps/details?id=com.example.campus',
-              ),
-              _ProjectCard(
-                title: 'Mobile Banking App',
-                description:
-                'Enterprise-grade mobile banking application for NRBC & Prime Bank.',
-                image:
-                'https://yourserver.com/bank_thumbnail.jpg',
-                tech: 'Flutter • Kotlin • REST API',
-                apk:
-                'https://drive.google.com/uc?export=download&id=yourApkId',
-                video:
-                'https://drive.google.com/file/d/yourVideoId/view',
-              ),
-              _ProjectCard(
-                title: 'IoT Automation System',
-                description:
-                'Smart home automation system using Flutter, Firebase, and ESP8266.',
-                image:
-                'https://yourserver.com/iot1.png',
-                tech: 'Flutter • Firebase • IoT',
-              ),
-            ],
+          // ===== SECTION 1 =====
+          _sectionTitle('Professional & Production Apps', 'Apps developed and maintained while working at reputed organizations.'),
+
+
+          _projectGrid(isMobile, _companyProjects),
+
+          const SizedBox(height: 70),
+
+          // ===== SECTION 2 =====
+          _sectionTitle('Client & Project Apps',''),
+          _projectGrid(isMobile, _clientProjects),
+
+          const SizedBox(height: 70),
+
+          // ===== SECTION 3 =====
+          _sectionTitle('Websites & Web Apps',''),
+          _projectGrid(isMobile, _websiteProjects),
+        ],
+      ),
+    );
+  }
+
+  // ================= HELPERS =================
+
+  Widget _sectionTitle(String title, String des) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(
+           des,
+            style: TextStyle(fontSize: 14, color: Colors.grey),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _projectGrid(bool isMobile, List<Project> data) {
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: data.length,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: isMobile ? 1 : 3,
+        crossAxisSpacing: 24,
+        mainAxisSpacing: 24,
+        childAspectRatio: 0.70,
+      ),
+      itemBuilder: (_, i) => _ProjectCard(
+        project: data[i],
+        onLaunch: _launch,
       ),
     );
   }
@@ -85,170 +105,276 @@ class ProjectsScreen extends StatelessWidget {
 
 // ================= PROJECT CARD =================
 
-class _ProjectCard extends StatelessWidget {
-  final String title;
-  final String description;
-  final String image;
-  final String tech;
-  final String? playStore;
-  final String? apk;
-  final String? video;
+class _ProjectCard extends StatefulWidget {
+  final Project project;
+  final Function(String) onLaunch;
 
   const _ProjectCard({
-    required this.title,
-    required this.description,
-    required this.image,
-    required this.tech,
-    this.playStore,
-    this.apk,
-    this.video,
+    required this.project,
+    required this.onLaunch,
   });
 
-  void launch(String url) async {
-    final uri = Uri.parse(url);
-    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
-      throw 'Could not launch $url';
-    }
-  }
+  @override
+  State<_ProjectCard> createState() => _ProjectCardState();
+}
+
+class _ProjectCardState extends State<_ProjectCard> {
+  bool hover = false;
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(16),
-      onTap: () {},
-      child: Container(
+    return MouseRegion(
+      onEnter: (_) => setState(() => hover = true),
+      onExit: (_) => setState(() => hover = false),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        transform: hover
+            ? (Matrix4.identity()..translate(0, -6))
+            : Matrix4.identity(),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(18),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.08),
-              blurRadius: 20,
-              offset: const Offset(0, 10),
+              color: Colors.black.withOpacity(hover ? 0.12 : 0.08),
+              blurRadius: 22,
+              offset: const Offset(0, 12),
             ),
           ],
         ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // ===== IMAGE =====
-              Stack(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _ProjectImage(project: widget.project),
+
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Image.network(
-                    image,
-                    height: 180,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
+                  Text(
+                    widget.project.title,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  Positioned(
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    child: Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            Colors.transparent,
-                            Colors.black87,
-                          ],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                        ),
-                      ),
-                      child: Text(
-                        title,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
+
+                  if (widget.project.company != null)
+                    Text(
+                      widget.project.company!,
+                      style: const TextStyle(
+                        fontSize: 13,
+                        color: Colors.grey,
                       ),
                     ),
+
+                  const SizedBox(height: 8),
+
+                  Text(
+                    widget.project.description,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontSize: 14, height: 1.5),
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  Text(
+                    widget.project.tech,
+                    style: const TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.blueGrey,
+                    ),
+                  ),
+
+                  const SizedBox(height: 14),
+
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 6,
+                    children: widget.project.links.map((link) {
+                      return OutlinedButton.icon(
+                        onPressed: () => widget.onLaunch(link.url),
+                        icon: Icon(link.icon, size: 18),
+                        label: Text(link.label),
+                      );
+                    }).toList(),
                   ),
                 ],
               ),
-
-              // ===== CONTENT =====
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      description,
-                      style: const TextStyle(fontSize: 14, height: 1.5),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      tech,
-                      style: const TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.blueGrey,
-                      ),
-                    ),
-                    const SizedBox(height: 14),
-
-                    // ===== ACTION BUTTONS =====
-                    Wrap(
-                      spacing: 10,
-                      runSpacing: 8,
-                      children: [
-                        if (playStore != null)
-                          _ActionButton(
-                            icon: Icons.shop,
-                            label: 'Play Store',
-                            onTap: () => launch(playStore!),
-                          ),
-                        if (apk != null)
-                          _ActionButton(
-                            icon: Icons.download,
-                            label: 'APK',
-                            onTap: () => launch(apk!),
-                          ),
-                        if (video != null)
-                          _ActionButton(
-                            icon: Icons.play_circle,
-                            label: 'Demo',
-                            onTap: () => launch(video!),
-                          ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-// ================= BUTTON =================
 
-class _ActionButton extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final VoidCallback onTap;
+class _ProjectImage extends StatelessWidget {
+  final Project project;
 
-  const _ActionButton({
-    required this.icon,
-    required this.label,
-    required this.onTap,
-  });
+  const _ProjectImage({required this.project});
 
   @override
   Widget build(BuildContext context) {
-    return OutlinedButton.icon(
-      onPressed: onTap,
-      icon: Icon(icon, size: 18),
-      label: Text(label),
-      style: OutlinedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+    return ClipRRect(
+      borderRadius: const BorderRadius.vertical(top: Radius.circular(18)),
+      child: Stack(
+        children: [
+          CachedNetworkImage(
+            imageUrl: project.imageUrl,
+            height: 180,
+            width: double.infinity,
+            fit: BoxFit.cover,
+            placeholder: (_, __) => _shimmer(),
+            errorWidget: (_, __, ___) => _placeholder(),
+          ),
+
+          if (project.isPlayStore)
+            Positioned(
+              top: 10,
+              right: 10,
+              child: Container(
+                padding:
+                const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                decoration: BoxDecoration(
+                  color: Colors.green.shade600,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: const Text(
+                  'Play Store',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _shimmer() {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey.shade300,
+      highlightColor: Colors.grey.shade100,
+      child: Container(
+        height: 180,
+        color: Colors.white,
+      ),
+    );
+  }
+
+  Widget _placeholder() {
+    return Container(
+      height: 180,
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Colors.blueGrey, Colors.black87],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+      ),
+      child: const Center(
+        child: Icon(Icons.image, size: 48, color: Colors.white70),
       ),
     );
   }
 }
+
+// ================= DATA MODELS =================
+
+class Project {
+  final String title;
+  final String description;
+  final String tech;
+  final String imageUrl;
+  final String? company;
+  final bool isPlayStore;
+  final List<ProjectLink> links;
+
+  Project({
+    required this.title,
+    required this.description,
+    required this.tech,
+    required this.imageUrl,
+    this.company,
+    this.isPlayStore = false,
+    required this.links,
+  });
+}
+
+class ProjectLink {
+  final String label;
+  final String url;
+  final IconData icon;
+
+  ProjectLink(this.label, this.url, this.icon);
+}
+
+final projects = [
+  Project(
+    title: '10 Minute School',
+    company: 'Robi 10 Minute School',
+    description: 'Large-scale EdTech app with live classes.',
+    tech: 'Flutter • Firebase',
+    imageUrl:
+    'https://play-lh.googleusercontent.com/your_real_image.png',
+    isPlayStore: true,
+    links: [
+      ProjectLink('Play Store', 'https://play.google.com', Icons.shop),
+    ],
+  ),
+];
+
+// ================= DATA =================
+
+final _companyProjects = [
+  Project(
+    title: '10 Minute School',
+    company: 'Robi 10 Minute School',
+    description:
+    'Large-scale EdTech app with live classes and learning content.',
+    imageUrl: 'assets/images/projects/10ms.png',
+    tech: 'Flutter • Firebase',
+    links: [
+      ProjectLink(
+        'Play Store',
+        'https://play.google.com',
+        Icons.shop,
+      ),
+    ],
+  ),
+];
+
+final _clientProjects = [
+  Project(
+    title: 'Mobile Banking App',
+    company: 'Banking Client',
+    description:
+    'Enterprise-grade mobile banking application.',
+    imageUrl: 'assets/images/projects/banking.png',
+    tech: 'Flutter • Kotlin • REST',
+    links: [
+      ProjectLink('APK', 'https://drive.google.com', Icons.download),
+      ProjectLink('Demo', 'https://drive.google.com', Icons.play_circle),
+    ],
+  ),
+];
+
+final _websiteProjects = [
+  Project(
+    title: 'Corporate Website',
+    description:
+    'Responsive business website with modern UI.',
+    imageUrl: 'assets/images/projects/web.png',
+    tech: 'Flutter Web • HTML',
+    links: [
+      ProjectLink('Visit', 'https://example.com', Icons.language),
+    ],
+  ),
+];
