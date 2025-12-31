@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio/ui/data/service_info.dart';
+import 'package:portfolio/widgets/animated_service_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ServicesScreen extends StatelessWidget {
@@ -20,7 +22,7 @@ class ServicesScreen extends StatelessWidget {
     return SingleChildScrollView(
       padding: EdgeInsets.symmetric(
         horizontal: isMobile ? 16 : 120,
-        vertical: 60,
+        vertical: 70,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -35,12 +37,12 @@ class ServicesScreen extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           const Text(
-            'How I help businesses and startups build reliable mobile applications.',
+            'Professional services I offer to help you build reliable and scalable solutions.',
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 16, color: Colors.grey),
           ),
 
-          const SizedBox(height: 60),
+          const SizedBox(height: 70),
 
           // ===== SERVICES GRID =====
           GridView.builder(
@@ -49,46 +51,48 @@ class ServicesScreen extends StatelessWidget {
             itemCount: servicesData.length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: isMobile ? 1 : 3,
-              crossAxisSpacing: 20,
-              mainAxisSpacing: 20,
-              childAspectRatio: isMobile ? 1.2 : 1.6, // 🔥 FIX
+              crossAxisSpacing: 28,
+              mainAxisSpacing: 28,
+              childAspectRatio: isMobile ? 1.25 : 1.4,
             ),
             itemBuilder: (context, index) {
-              final service = servicesData[index];
-              return _ServiceCard(service: service);
+              return AnimatedServiceCard(
+                service: servicesData[index],
+                delay: index * 120,
+              );
             },
           ),
 
-          const SizedBox(height: 80),
+          const SizedBox(height: 90),
 
           // ===== CTA =====
           Container(
-            padding: const EdgeInsets.all(32),
+            padding: const EdgeInsets.all(36),
             decoration: BoxDecoration(
               color: Colors.blueGrey.shade50,
-              borderRadius: BorderRadius.circular(18),
+              borderRadius: BorderRadius.circular(20),
             ),
             child: Column(
               children: [
                 const Text(
-                  'Ready to start your project?',
+                  'Have a project in mind?',
                   style: TextStyle(
-                    fontSize: 22,
+                    fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 12),
                 const Text(
                   'Let’s discuss your idea and build something impactful together.',
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 15),
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 26),
                 ElevatedButton(
                   onPressed: _openWhatsApp,
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 32,
+                      horizontal: 36,
                       vertical: 16,
                     ),
                   ),
@@ -105,106 +109,3 @@ class ServicesScreen extends StatelessWidget {
     );
   }
 }
-
-// ================= SERVICE CARD =================
-
-class _ServiceCard extends StatelessWidget {
-  final Map<String, dynamic> service;
-
-  const _ServiceCard({required this.service});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(18), // 🔥 reduced
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 14,
-            offset: const Offset(0, 8),
-          ),
-        ],
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center, // 🔥 center vertically
-        children: [
-          Icon(
-            service['icon'],
-            size: 36, // 🔥 smaller icon
-            color: Theme.of(context).primaryColor,
-          ),
-          const SizedBox(height: 14),
-          Text(
-            service['title'],
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            service['description'],
-            textAlign: TextAlign.center,
-            maxLines: 3, // 🔥 prevent tall cards
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              fontSize: 13,
-              height: 1.5,
-              color: Colors.grey,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-
-final List<Map<String, dynamic>> servicesData = [
-  {
-    'title': 'Flutter App Development',
-    'description':
-    'High-quality cross-platform mobile applications built with Flutter. '
-        'Clean architecture, smooth UI, and production-ready performance.',
-    'icon': Icons.phone_iphone,
-  },
-  {
-    'title': 'Android (Java / Kotlin)',
-    'description':
-    'Native Android applications with scalable architecture, modern UI, '
-        'and long-term maintainability.',
-    'icon': Icons.android,
-  },
-  {
-    'title': 'Fintech & Banking Apps',
-    'description':
-    'Secure, enterprise-grade mobile applications for banking and fintech systems '
-        'with real-world production experience.',
-    'icon': Icons.account_balance,
-  },
-  {
-    'title': 'Firebase & REST APIs',
-    'description':
-    'Authentication, Firestore, push notifications, analytics, and REST API '
-        'integration for modern mobile apps.',
-    'icon': Icons.cloud,
-  },
-  {
-    'title': 'App Performance Optimization',
-    'description':
-    'Improve app speed, reduce crashes, fix memory issues, and enhance overall '
-        'user experience.',
-    'icon': Icons.speed,
-  },
-  {
-    'title': 'App Maintenance & Support',
-    'description':
-    'Bug fixes, feature updates, Play Store support, and long-term application '
-        'maintenance.',
-    'icon': Icons.support_agent,
-  },
-];
