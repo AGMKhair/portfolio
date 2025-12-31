@@ -10,17 +10,27 @@ class ProjectImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isAsset = project.imageUrl.startsWith('assets/');
+
     return ClipRRect(
       borderRadius: const BorderRadius.vertical(top: Radius.circular(18)),
       child: Stack(
         children: [
-          CachedNetworkImage(
-            imageUrl: project.imageUrl,
+          SizedBox(
             height: 180,
             width: double.infinity,
-            fit: BoxFit.fill,
-            placeholder: (_, __) => _shimmer(),
-            errorWidget: (_, __, ___) => _placeholder(),
+            child: isAsset
+                ? Image.asset(
+              project.imageUrl,
+              fit: BoxFit.fill,
+              errorBuilder: (_, __, ___) => _placeholder(), // ✅ FIX
+            )
+                : CachedNetworkImage(
+              imageUrl: project.imageUrl,
+              fit: BoxFit.fill,
+              placeholder: (_, __) => _shimmer(),
+              errorWidget: (_, __, ___) => _placeholder(),
+            ),
           ),
 
           if (project.isPlayStore)
@@ -49,6 +59,7 @@ class ProjectImage extends StatelessWidget {
     );
   }
 
+  // ===== SHIMMER =====
   Widget _shimmer() {
     return Shimmer.fromColors(
       baseColor: Colors.grey.shade300,
@@ -60,6 +71,7 @@ class ProjectImage extends StatelessWidget {
     );
   }
 
+  // ===== PLACEHOLDER =====
   Widget _placeholder() {
     return Container(
       height: 180,
@@ -71,7 +83,11 @@ class ProjectImage extends StatelessWidget {
         ),
       ),
       child: const Center(
-        child: Icon(Icons.image, size: 48, color: Colors.white70),
+        child: Icon(
+          Icons.image_not_supported_outlined,
+          size: 46,
+          color: Colors.white70,
+        ),
       ),
     );
   }
