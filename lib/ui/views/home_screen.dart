@@ -198,7 +198,7 @@ class HomeScreen extends StatelessWidget {
 
           const SizedBox(height: 80),
 
-          ProjectsScreen(),
+          ProjectsScreen(isHome: true,),
 
           // ===== WHY ME =====
           Text(

@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio/core/models/project.dart';
+import 'package:portfolio/ui/data/company_projects.dart';
+import 'package:portfolio/ui/data/personal_project.dart';
+import 'package:portfolio/ui/data/website_projects.dart';
+import 'package:portfolio/widgets/project_image_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:flutter/material.dart';
@@ -7,7 +12,8 @@ import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProjectsScreen extends StatelessWidget {
-  const ProjectsScreen({super.key});
+  bool isHome = false;
+  ProjectsScreen({super.key, this.isHome = false});
 
   void _launch(String url) async {
     final uri = Uri.parse(url);
@@ -42,19 +48,19 @@ class ProjectsScreen extends StatelessWidget {
           _sectionTitle('Professional & Production Apps', 'Apps developed and maintained while working at reputed organizations.'),
 
 
-          _projectGrid(isMobile, _companyProjects),
+          _projectGrid(isMobile, companyProjects),
 
           const SizedBox(height: 70),
 
           // ===== SECTION 2 =====
           _sectionTitle('Client & Project Apps',''),
-          _projectGrid(isMobile, _clientProjects),
+          _projectGrid(isMobile, clientProjects),
 
           const SizedBox(height: 70),
 
           // ===== SECTION 3 =====
           _sectionTitle('Websites & Web Apps',''),
-          _projectGrid(isMobile, _websiteProjects),
+          _projectGrid(isMobile, websiteProjects),
         ],
       ),
     );
@@ -93,7 +99,7 @@ class ProjectsScreen extends StatelessWidget {
         crossAxisCount: isMobile ? 1 : 3,
         crossAxisSpacing: 24,
         mainAxisSpacing: 24,
-        childAspectRatio: 0.70,
+        childAspectRatio: isMobile ?  isHome ?  0.8 : 0.85 : isHome ? .8 :  1.1,
       ),
       itemBuilder: (_, i) => _ProjectCard(
         project: data[i],
@@ -143,9 +149,9 @@ class _ProjectCardState extends State<_ProjectCard> {
           ],
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            _ProjectImage(project: widget.project),
+            ProjectImage(project: widget.project),
 
             Padding(
               padding: const EdgeInsets.all(16),
@@ -210,171 +216,3 @@ class _ProjectCardState extends State<_ProjectCard> {
     );
   }
 }
-
-
-class _ProjectImage extends StatelessWidget {
-  final Project project;
-
-  const _ProjectImage({required this.project});
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: const BorderRadius.vertical(top: Radius.circular(18)),
-      child: Stack(
-        children: [
-          CachedNetworkImage(
-            imageUrl: project.imageUrl,
-            height: 180,
-            width: double.infinity,
-            fit: BoxFit.cover,
-            placeholder: (_, __) => _shimmer(),
-            errorWidget: (_, __, ___) => _placeholder(),
-          ),
-
-          if (project.isPlayStore)
-            Positioned(
-              top: 10,
-              right: 10,
-              child: Container(
-                padding:
-                const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                decoration: BoxDecoration(
-                  color: Colors.green.shade600,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: const Text(
-                  'Play Store',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-
-  Widget _shimmer() {
-    return Shimmer.fromColors(
-      baseColor: Colors.grey.shade300,
-      highlightColor: Colors.grey.shade100,
-      child: Container(
-        height: 180,
-        color: Colors.white,
-      ),
-    );
-  }
-
-  Widget _placeholder() {
-    return Container(
-      height: 180,
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Colors.blueGrey, Colors.black87],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
-      child: const Center(
-        child: Icon(Icons.image, size: 48, color: Colors.white70),
-      ),
-    );
-  }
-}
-
-// ================= DATA MODELS =================
-
-class Project {
-  final String title;
-  final String description;
-  final String tech;
-  final String imageUrl;
-  final String? company;
-  final bool isPlayStore;
-  final List<ProjectLink> links;
-
-  Project({
-    required this.title,
-    required this.description,
-    required this.tech,
-    required this.imageUrl,
-    this.company,
-    this.isPlayStore = false,
-    required this.links,
-  });
-}
-
-class ProjectLink {
-  final String label;
-  final String url;
-  final IconData icon;
-
-  ProjectLink(this.label, this.url, this.icon);
-}
-
-final projects = [
-  Project(
-    title: '10 Minute School',
-    company: 'Robi 10 Minute School',
-    description: 'Large-scale EdTech app with live classes.',
-    tech: 'Flutter • Firebase',
-    imageUrl:
-    'https://play-lh.googleusercontent.com/your_real_image.png',
-    isPlayStore: true,
-    links: [
-      ProjectLink('Play Store', 'https://play.google.com', Icons.shop),
-    ],
-  ),
-];
-
-// ================= DATA =================
-
-final _companyProjects = [
-  Project(
-    title: '10 Minute School',
-    company: 'Robi 10 Minute School',
-    description:
-    'Large-scale EdTech app with live classes and learning content.',
-    imageUrl: 'assets/images/projects/10ms.png',
-    tech: 'Flutter • Firebase',
-    links: [
-      ProjectLink(
-        'Play Store',
-        'https://play.google.com',
-        Icons.shop,
-      ),
-    ],
-  ),
-];
-
-final _clientProjects = [
-  Project(
-    title: 'Mobile Banking App',
-    company: 'Banking Client',
-    description:
-    'Enterprise-grade mobile banking application.',
-    imageUrl: 'assets/images/projects/banking.png',
-    tech: 'Flutter • Kotlin • REST',
-    links: [
-      ProjectLink('APK', 'https://drive.google.com', Icons.download),
-      ProjectLink('Demo', 'https://drive.google.com', Icons.play_circle),
-    ],
-  ),
-];
-
-final _websiteProjects = [
-  Project(
-    title: 'Corporate Website',
-    description:
-    'Responsive business website with modern UI.',
-    imageUrl: 'assets/images/projects/web.png',
-    tech: 'Flutter Web • HTML',
-    links: [
-      ProjectLink('Visit', 'https://example.com', Icons.language),
-    ],
-  ),
-];
