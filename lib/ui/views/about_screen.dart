@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/utils/size_extensions.dart';
 import 'package:portfolio/widgets/achievement_card_widget.dart';
+import 'package:portfolio/widgets/company_badge_widget.dart';
 import 'package:portfolio/widgets/experience_card_widget.dart';
 import 'package:portfolio/widgets/impact_card_widget.dart';
 import 'package:portfolio/widgets/training_card_widget.dart';
@@ -87,22 +88,18 @@ class AboutScreen extends StatelessWidget {
                 title: 'Android Lecturer',
                 organization: 'GraphView Inc',
               ),
-              const SizedBox(height: 10),
 
               ExperienceCard(
                 icon: Icons.school,
                 title: 'Android Lecturer',
                 organization: 'Computer Programming Club, DIU',
               ),
-              const SizedBox(height: 10),
 
               ExperienceCard(
                 icon: Icons.star,
                 title: 'Student Prefect (Java)',
                 organization: 'Daffodil International University',
               ),
-              const SizedBox(height: 10),
-
               const ExperienceCard(
                 icon: Icons.person,
                 title: 'Member',
@@ -117,13 +114,18 @@ class AboutScreen extends StatelessWidget {
           _sectionTitle('🤝 Social & Community Leadership'),
           const SizedBox(height: 24),
 
-          const ImpactCard(
-            role: 'CTO',
-            organization: 'Change of Community Organization (CCO)',
-          ),
-          const ImpactCard(
-            role: 'CTO',
-            organization: 'হিলফুল ফুজুল সমাজকল্যাণ সংস্থা',
+          Wrap(
+            children: [
+              const ImpactCard(
+                role: 'CTO',
+                organization: 'Change of Community Organization (CCO)',
+              ),
+              const ImpactCard(
+                role: 'CTO',
+                organization: 'হিলফুল ফুজুল সমাজকল্যাণ সংস্থা',
+              ),
+
+            ],
           ),
 
           const SizedBox(height: 70),
@@ -143,6 +145,21 @@ class AboutScreen extends StatelessWidget {
           const TrainingCard(
             title: 'Training on Android App Development',
             institute: 'BASIS Institute of Technology & Management (BITM)',
+          ),
+          const SizedBox(height: 70),
+
+          _sectionTitle('Companies & Organizations I’ve Worked With'),
+          const SizedBox(height: 24),
+          Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 16,
+            runSpacing: 16,
+            children: const [
+              CompanyBadge('Islami Bank Bangladesh PLC'),
+              CompanyBadge('Red Technologies Ltd'),
+              CompanyBadge('Robi 10 Minute School'),
+              CompanyBadge('CIBL Technology Consultants Ltd'),
+            ],
           ),
 
           const SizedBox(height: 80),
