@@ -84,13 +84,13 @@ class AboutScreen extends StatelessWidget {
           Wrap(
             children: [
               ExperienceCard(
-                icon: Icons.school,
+                icon: Icons.cast_for_education,
                 title: 'Android Lecturer',
                 organization: 'GraphView Inc',
               ),
 
               ExperienceCard(
-                icon: Icons.school,
+                icon: Icons.cast_for_education,
                 title: 'Android Lecturer',
                 organization: 'Computer Programming Club, DIU',
               ),

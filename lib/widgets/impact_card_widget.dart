@@ -45,7 +45,7 @@ class ImpactCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: const Icon(
-                  Icons.volunteer_activism,
+                  Icons.interests_outlined,
                   color: Colors.white,
                   size: 22,
                 ),
