@@ -50,7 +50,7 @@ class HomeScreen extends StatelessWidget {
 
           // ===== ROLE =====
           Text(
-            'Senior Flutter & Mobile Application Engineer',
+            'Software Engineer',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: isMobile ? 15 : 20,

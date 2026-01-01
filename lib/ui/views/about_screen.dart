@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/utils/size_extensions.dart';
-import 'package:portfolio/widgets/hero_badge_widget.dart';
-import 'package:portfolio/widgets/skill_chip_widget.dart';
-import 'package:portfolio/widgets/trust_cart_widget.dart';
+import 'package:portfolio/widgets/achievement_card_widget.dart';
+import 'package:portfolio/widgets/experience_card_widget.dart';
+import 'package:portfolio/widgets/impact_card_widget.dart';
+import 'package:portfolio/widgets/training_card_widget.dart';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
@@ -19,128 +20,145 @@ class AboutScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // ===== PROFILE =====
+          // ================= HEADER =================
           CircleAvatar(
-            radius: isMobile ? 52 : 72,
+            radius: isMobile ? 54 : 74,
             backgroundImage: const AssetImage('assets/images/logo.png'),
           ),
-          const SizedBox(height: 18),
+          const SizedBox(height: 16),
 
-          // Name (slightly smaller than Home hero)
           Text(
             'AGM Khair Sabbir',
-            textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: isMobile ? 22 : 28,
+              fontSize: isMobile ? 24 : 30,
               fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: 6),
 
-          // Role (calm, not loud)
           Text(
             'Software Engineer | Mobile (Flutter, Java, Kotlin) & Backend (Spring Boot)',
             textAlign: TextAlign.center,
-            style: TextStyle(
-              // fontSize: context.contentSize,
-              color: Colors.grey[700],
-            ),
+            style: TextStyle(color: Colors.grey[700]),
           ),
 
-          const SizedBox(height: 30),
+          const SizedBox(height: 40),
 
-          // ===== SHORT INTRO =====
-          Text(
-            'I help businesses and startups build reliable, scalable, and high-quality '
-                'mobile applications using Flutter and Android.',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              // fontSize: context.contentSize,
-              height: 1.6,
-            ),
+          _introText(
+            'I build production-ready mobile applications and lead teams with a strong '
+            'focus on quality, performance, and long-term impact.',
           ),
 
-          const SizedBox(height: 42),
+          const SizedBox(height: 60),
 
-          // ===== TRUST HIGHLIGHTS =====
+          // ================= ACHIEVEMENTS =================
+          _sectionTitle('🏆 Achievements & Recognition'),
+          const SizedBox(height: 24),
+
           Wrap(
+            spacing: 20,
+            runSpacing: 20,
             alignment: WrapAlignment.center,
-            spacing: 14,
-            runSpacing: 14,
             children: const [
-              HeroBadge('5+ Years Experience'),
-              HeroBadge('Large-Scale Production Apps'),
-              HeroBadge('Fintech & Banking'),
-              HeroBadge('Flutter Specialist'),
-
-              // TrustCard(title: '5+ Years', subtitle: 'Experience'),
-              // TrustCard(title: 'Large-Scale Apps', subtitle: 'Production Ready'),
-              // TrustCard(title: 'Fintech & Banking', subtitle: 'Enterprise Systems'),
-              // TrustCard(title: 'Flutter', subtitle: 'Specialist'),
+              AchievementCard(
+                title: '1st Position',
+                subtitle: 'DIU Foundation Day',
+                description:
+                    'Smart Campus (Android + IoT)\nDaffodil International University',
+              ),
+              AchievementCard(
+                title: '5th Position',
+                subtitle: 'DIU Carnival',
+                description:
+                    'Campus Guide Android Application\nDaffodil International University',
+              ),
             ],
           ),
 
-          const SizedBox(height: 55),
+          const SizedBox(height: 70),
 
-          // ===== WHY TRUST ME =====
-          _sectionTitle(context, 'Why Clients Trust Me'),
-          _centerText(
-            context,
-            'I focus on clean architecture, performance, and long-term maintainability. '
-                'I have worked on real production systems where reliability matters. '
-                'My goal is simple — deliver software that works and keeps clients tension-free.',
-          ),
-
-          const SizedBox(height: 45),
-
-          // ===== WHAT I CAN DO =====
-          _sectionTitle(context, 'What I Can Help You With'),
+          // ================= LEADERSHIP =================
+          _sectionTitle('🎓 Leadership & Teaching Experience'),
+          const SizedBox(height: 24),
           Wrap(
-            alignment: WrapAlignment.center,
-            spacing: 10,
-            runSpacing: 10,
-            children: const [
-              SkillChip('Flutter App Development'),
-              SkillChip('Android (Java / Kotlin)'),
-              SkillChip('Backend Development (Spring Boot)'),
-              SkillChip('Firebase & REST APIs'),
-              SkillChip('Fintech & Banking Systems'),
-              SkillChip('Performance Optimization'),
-              SkillChip('App Deployment & Maintenance'),
-              SkillChip('Technical Research & Planning'),
+            children: [
+              ExperienceCard(
+                icon: Icons.school,
+                title: 'Android Lecturer',
+                organization: 'GraphView Inc',
+              ),
+              const SizedBox(height: 10),
 
+              ExperienceCard(
+                icon: Icons.school,
+                title: 'Android Lecturer',
+                organization: 'Computer Programming Club, DIU',
+              ),
+              const SizedBox(height: 10),
+
+              ExperienceCard(
+                icon: Icons.star,
+                title: 'Student Prefect (Java)',
+                organization: 'Daffodil International University',
+              ),
+              const SizedBox(height: 10),
+
+              const ExperienceCard(
+                icon: Icons.person,
+                title: 'Member',
+                organization: 'Computer & Programming Club, DIU',
+              ),
             ],
           ),
 
-          const SizedBox(height: 55),
+          const SizedBox(height: 70),
 
-          // ===== CAREER SNAPSHOT =====
-          _sectionTitle(context, 'Professional Background'),
-          _centerText(
-            context,
-            'I started my career in 2019 and have worked with organizations such as '
-                'Robi 10 Minute School, CIBL Technology Consultants, and Islami Bank '
-                'Bangladesh PLC. Currently, I work as a Senior Associate Software Engineer '
-                'building secure, scalable mobile solutions.',
+          // ================= SOCIAL =================
+          _sectionTitle('🤝 Social & Community Leadership'),
+          const SizedBox(height: 24),
+
+          const ImpactCard(
+            role: 'CTO',
+            organization: 'Change of Community Organization (CCO)',
+          ),
+          const ImpactCard(
+            role: 'CTO',
+            organization: 'হিলফুল ফুজুল সমাজকল্যাণ সংস্থা',
           ),
 
-          const SizedBox(height: 55),
+          const SizedBox(height: 70),
 
-          // ===== FINAL TRUST MESSAGE =====
+          // ================= TRAINING =================
+          _sectionTitle('📘 Training & Business Knowledge'),
+          const SizedBox(height: 24),
+
+          const TrainingCard(
+            title: 'Project Management for Startups',
+            institute: 'BASIS Institute of Technology & Management (BITM)',
+          ),
+          const TrainingCard(
+            title: 'Entrepreneurship & Innovation',
+            institute: 'BATIGOR Academy, Dhaka - Instructor: Coach Kanchon',
+          ),
+          const TrainingCard(
+            title: 'Training on Android App Development',
+            institute: 'BASIS Institute of Technology & Management (BITM)',
+          ),
+
+          const SizedBox(height: 80),
+
+          // ================= FINAL =================
           Container(
-            padding: const EdgeInsets.all(22),
+            padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
               color: Colors.blueGrey.shade50,
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(18),
             ),
-            child: Text(
-              '“If you want a developer who understands business needs, communicates clearly, '
-                  'and delivers quality work on time — you can rely on me.”',
+            child: const Text(
+              '“I don’t just code features — I build systems, mentor people, '
+              'and take responsibility for the outcome.”',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                // fontSize: context.contentSize,
-                fontStyle: FontStyle.italic,
-              ),
+              style: TextStyle(fontStyle: FontStyle.italic),
             ),
           ),
         ],
@@ -150,29 +168,22 @@ class AboutScreen extends StatelessWidget {
 
   // ================= HELPERS =================
 
-  Widget _sectionTitle(BuildContext context, String title) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 14),
-      child: Text(
-        title,
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontSize: context.isMobile ? 18 : 22,
-          fontWeight: FontWeight.bold,
-        ),
+  Widget _sectionTitle(String text) {
+    return Text(
+      text,
+      style: const TextStyle(
+        fontSize: 22,
+        fontWeight: FontWeight.bold,
       ),
+      textAlign: TextAlign.center,
     );
   }
 
-  Widget _centerText(BuildContext context, String text) {
+  Widget _introText(String text) {
     return Text(
       text,
       textAlign: TextAlign.center,
-      style: TextStyle(
-        // fontSize: context.contentSize,
-        height: 1.6,
-      ),
+      style: const TextStyle(height: 1.6),
     );
   }
 }
-
