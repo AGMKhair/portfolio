@@ -6,10 +6,10 @@ class DrawerMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: const [
-        AppMenu(),
-      ],
+    return Container(
+      color: Colors.blueGrey,
+      padding: const EdgeInsets.only(top: 40),
+      child: const AppMenu(),
     );
   }
 }
