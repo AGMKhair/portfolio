@@ -49,7 +49,7 @@ final clientProjects = [
     links: [
       ProjectLink(
         'Play Store',
-        'https://play.google.com/store/apps/details?id=com.agmkhair.carrental&pcampaignid=web_share',
+        'https://play.google.com/store/apps/details?id=com.agmkhair.finwiz.finwiz&pcampaignid=web_share',
         Icons.shop,
       ),
     ],
@@ -80,7 +80,7 @@ final clientProjects = [
     company: 'SponT IT',
     description:
     'AponSeba Pharmacy Management',
-    imageUrl: 'assets/images/pharmacy.png',
+    imageUrl: 'assets/images/placeholder.png',
     tech: 'Flutter',
     isPlayStore: true,
     links: [
@@ -94,4 +94,41 @@ final clientProjects = [
 
 
 
+];
+
+
+final socialProjects = [
+  Project(
+    title: 'হিলফুল ফুজুল | Hilful Fuzul',
+    company: 'SponT IT',
+    description:
+    'The official app of Hilful Fuzul Samaj Kalyan Sangstha — where you will find all the necessary information about our introduction, goals, ongoing activities, routine updates, notices/announcements and support/donation in one place.',
+    imageUrl: 'assets/images/hilfulfuzul.png',
+    tech: 'Flutter • Firebase',
+    isPlayStore: true,
+    links: [
+      ProjectLink(
+        'Play Store',
+        'https://play.google.com/store/apps/details?id=com.agmkhair.spontit.hilfulfuzul.hilful_fuzul_somaj_kollan_songstha&pcampaignid=web_share',
+        Icons.shop,
+      ),
+    ],
+  ),
+
+  Project(
+    title: 'Campus Blood Donorly',
+    company: 'SponT IT',
+    description:
+    'Campus Blood Donorly – Give Blood, Give Hope, Save Lives.',
+    imageUrl: 'assets/images/diu.png',
+    tech: 'Flutter',
+    isPlayStore: true,
+    links: [
+      ProjectLink(
+        'Play Store',
+        'https://play.google.com/store/apps/details?id=com.spontit.agmkhair.diu_life_save&pcampaignid=web_share',
+        Icons.shop,
+      ),
+    ],
+  ),
 ];

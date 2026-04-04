@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio/utils/size_extensions.dart';
 
 class FeatureCard extends StatefulWidget {
@@ -21,25 +22,30 @@ class _FeatureCardState extends State<FeatureCard> {
   Widget build(BuildContext context) {
     final isMobile = context.isMobile;
     final icon = _iconForTitle(widget.title);
+    const primaryColor = Color(0xFF1A237E);
 
     return MouseRegion(
       onEnter: (_) => setState(() => _hovered = true),
       onExit: (_) => setState(() => _hovered = false),
       child: AnimatedScale(
         scale: _hovered && !isMobile ? 1.04 : 1.0,
-        duration: const Duration(milliseconds: 180),
-        curve: Curves.easeOut,
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.easeOutCubic,
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          width: isMobile ? double.infinity : 260,
-          padding: const EdgeInsets.all(22),
+          duration: const Duration(milliseconds: 250),
+          width: isMobile ? double.infinity : 280,
+          padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(18),
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+              color: _hovered ? primaryColor.withOpacity(0.3) : Colors.transparent,
+              width: 2,
+            ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(_hovered ? 0.12 : 0.06),
-                blurRadius: _hovered ? 22 : 14,
+                color: primaryColor.withOpacity(_hovered ? 0.15 : 0.08),
+                blurRadius: _hovered ? 25 : 15,
                 offset: const Offset(0, 10),
               ),
             ],
@@ -49,34 +55,35 @@ class _FeatureCardState extends State<FeatureCard> {
             children: [
               // ===== ICON =====
               AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
-                padding: const EdgeInsets.all(14),
+                duration: const Duration(milliseconds: 250),
+                padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: _hovered
-                      ? Colors.blueGrey.shade100
+                      ? primaryColor.withOpacity(0.1)
                       : Colors.blueGrey.shade50,
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
                   icon,
-                  size: 30,
-                  color: Colors.blueGrey.shade800,
+                  size: 32,
+                  color: _hovered ? primaryColor : Colors.blueGrey.shade700,
                 ),
               ),
 
-              const SizedBox(height: 18),
+              const SizedBox(height: 20),
 
               // ===== TITLE =====
               Text(
                 widget.title,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 16,
+                style: GoogleFonts.poppins(
+                  fontSize: 17,
                   fontWeight: FontWeight.bold,
+                  color: _hovered ? primaryColor : Colors.black87,
                 ),
               ),
 
-              const SizedBox(height: 10),
+              const SizedBox(height: 12),
 
               // ===== DESCRIPTION =====
               Text(
@@ -84,10 +91,10 @@ class _FeatureCardState extends State<FeatureCard> {
                 textAlign: TextAlign.center,
                 maxLines: 4,
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 13,
-                  height: 1.5,
-                  color: Colors.grey,
+                style: GoogleFonts.inter(
+                  fontSize: 13.5,
+                  height: 1.6,
+                  color: Colors.grey.shade600,
                 ),
               ),
             ],

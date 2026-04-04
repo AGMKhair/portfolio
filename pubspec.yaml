@@ -43,6 +43,11 @@ dependencies:
   firebase_auth: ^4.15.3
   cached_network_image: ^3.3.1
   shimmer: ^3.0.0
+  animate_do: ^4.2.0
+  flutter_staggered_animations: ^1.1.1
+  google_fonts: ^8.0.2
+  lottie: ^3.1.2
+  flutter_svg: ^2.0.10+1
 
 dev_dependencies:
   flutter_test:
@@ -71,6 +76,7 @@ flutter:
     - assets/
     - assets/svg/
     - assets/images/
+    - assets/lottie/
 #    - assets/images/placeholder.png
 #    - assets/images/background.jpg
 #    - assets/images/logo.png

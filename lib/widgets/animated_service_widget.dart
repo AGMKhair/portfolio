@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class AnimatedServiceCard extends StatefulWidget {
   final Map<String, dynamic> service;
@@ -46,6 +47,8 @@ class _AnimatedServiceCardState extends State<AnimatedServiceCard>
 
   @override
   Widget build(BuildContext context) {
+    const primaryColor = Color(0xFF1A237E);
+    
     return MouseRegion(
       onEnter: (_) => setState(() => _hovered = true),
       onExit: (_) => setState(() => _hovered = false),
@@ -58,11 +61,15 @@ class _AnimatedServiceCardState extends State<AnimatedServiceCard>
             padding: const EdgeInsets.all(22),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(18),
+              borderRadius: BorderRadius.circular(24),
+              border: Border.all(
+                color: _hovered ? primaryColor.withOpacity(0.1) : Colors.transparent,
+                width: 2,
+              ),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(_hovered ? 0.10 : 0.06),
-                  blurRadius: _hovered ? 26 : 16,
+                  color: Colors.black.withOpacity(_hovered ? 0.08 : 0.04),
+                  blurRadius: _hovered ? 30 : 20,
                   offset: const Offset(0, 10),
                 ),
               ],
@@ -70,18 +77,29 @@ class _AnimatedServiceCardState extends State<AnimatedServiceCard>
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  widget.service['icon'],
-                  size: 40,
-                  color: Theme.of(context).primaryColor,
-                ),
+                if (widget.service['lottie'] != null)
+                  SizedBox(
+                    height: 80,
+                    width: 80,
+                    child: Lottie.asset(
+                      widget.service['lottie'],
+                      repeat: true,
+                    ),
+                  )
+                else
+                  Icon(
+                    widget.service['icon'],
+                    size: 40,
+                    color: primaryColor,
+                  ),
                 const SizedBox(height: 16),
                 Text(
                   widget.service['title'],
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                    fontSize: 17,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
+                    color: primaryColor,
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -90,10 +108,10 @@ class _AnimatedServiceCardState extends State<AnimatedServiceCard>
                   textAlign: TextAlign.center,
                   maxLines: 4,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 14,
                     height: 1.6,
-                    color: Colors.grey,
+                    color: Colors.blueGrey.shade700,
                   ),
                 ),
               ],

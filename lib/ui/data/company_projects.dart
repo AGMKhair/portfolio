@@ -11,7 +11,7 @@ final companyProjects = [
     imageUrl: 'assets/images/red_cube.png',
     isPlayStore: true,
     links: [
-      ProjectLink('Play Store', 'https://play.google.com/store/apps/details?id=com.ibbl.cellfin&pcampaignid=web_share', Icons.shop),
+      ProjectLink('Play Store', 'https://play.google.com/store/apps/details?id=co.uk.redcube.merchant&pcampaignid=web_share', Icons.shop),
     ],
   ),
 

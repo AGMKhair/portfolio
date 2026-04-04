@@ -30,7 +30,7 @@ final websiteProjects = [
     imageUrl: 'assets/images/edu.png',
     tech: 'Flutter Web • HTML',
     links: [
-      ProjectLink('Visit', 'www.myeduwrite.com', Icons.language),
+      ProjectLink('Visit', 'https://myeduwrite.com', Icons.language),
     ],
   ),
 ];

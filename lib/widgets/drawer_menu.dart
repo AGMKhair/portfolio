@@ -7,8 +7,8 @@ class DrawerMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.blueGrey,
-      padding: const EdgeInsets.only(top: 40),
+      color: Colors.white, // Changed to white for a cleaner look
+      padding: const EdgeInsets.only(top: 60),
       child: const AppMenu(),
     );
   }

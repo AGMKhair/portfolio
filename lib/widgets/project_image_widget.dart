@@ -17,13 +17,13 @@ class ProjectImage extends StatelessWidget {
       child: Stack(
         children: [
           SizedBox(
-            height: 180,
             width: double.infinity,
+            height: double.infinity,
             child: isAsset
                 ? Image.asset(
               project.imageUrl,
               fit: BoxFit.fill,
-              errorBuilder: (_, __, ___) => _placeholder(), // ✅ FIX
+              errorBuilder: (_, __, ___) => _placeholder(),
             )
                 : CachedNetworkImage(
               imageUrl: project.imageUrl,
