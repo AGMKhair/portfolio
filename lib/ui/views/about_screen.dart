@@ -128,7 +128,7 @@ class _StorySection extends StatelessWidget {
         _StoryParagraph(
           title: 'Professional Summary',
           content:
-              'Results-driven Software Engineer with 5+ years of experience designing and developing secure, scalable, and high-performance mobile and backend applications for the Banking and FinTech industry. Specialized in Flutter, Java, Kotlin, Spring Boot, Oracle Database, REST APIs, and enterprise payment systems. Delivered digital banking solutions including fund transfers, payment gateways, QR payments, RTGS, NPSB, Binimoy integration, and merchant banking services.',
+              'Results-driven Software Engineer with 6+ years of experience designing and developing secure, scalable, and high-performance mobile, web, and backend applications across FinTech, Banking, EduTech, and Enterprise ERP industries. Specialized in Flutter, Java, Kotlin, Spring Boot, Oracle Database, REST APIs, and enterprise payment systems. Delivered digital banking platforms, 1M+ active user EdTech solutions, ERP systems, and payment gateway integrations.',
           textSecondary: textSecondary,
           textMuted: textMuted,
         ),

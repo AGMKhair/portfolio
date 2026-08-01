@@ -147,8 +147,8 @@ class _HeroSection extends StatelessWidget {
         SizedBox(
           width: isMobile ? double.infinity : 540,
           child: Text(
-            'Software Engineer with 5+ years specializing in Flutter, Spring Boot, Java, Kotlin & Oracle DB. '
-            'Delivered digital banking systems, payment gateways, RTGS, NPSB, and Binimoy integrations for major banks.',
+            'Software Engineer with 6+ years of experience across FinTech, EduTech, Banking & Enterprise ERPs. '
+            'Specialized in Flutter, Spring Boot, Java, Kotlin & Oracle DB delivering high-impact mobile and backend solutions.',
             textAlign: isMobile ? TextAlign.center : TextAlign.left,
             style: GoogleFonts.inter(
               fontSize: isMobile ? 15 : 17,
@@ -187,7 +187,7 @@ class _HeroSection extends StatelessWidget {
               label: 'Download CV',
               icon: Icons.download_rounded,
               onTap: () => launch(
-                  'https://drive.google.com/file/d/17PJMv4IGXCwfOwMz0iFpc8fghSq8xrDm/view?usp=sharing'),
+                  'https://drive.google.com/file/d/1vSIkfZMFkBEAXdPtFyAIUyJWqsK0gyCE/view?usp=sharing'),
             ),
           ],
         ),
@@ -261,8 +261,8 @@ class _HeroSection extends StatelessWidget {
             bottom: isMobile ? 10 : 20,
             right: isMobile ? 10 : 20,
             child: const _FloatingBadge(
-              value: '5+ Yrs',
-              label: 'FinTech & Banking',
+              value: '6+ Yrs',
+              label: 'Software Eng. Exp',
               color: AppColors.accent,
             ),
           ),
@@ -348,7 +348,7 @@ class _MetricsSection extends StatelessWidget {
     final bgColor = isDark ? AppColors.bgSurface : AppColors.bgLightCard;
 
     const metrics = [
-      ('5+ Yrs', 'Banking & FinTech Exp'),
+      ('6+ Yrs', 'Total Software Eng. Exp'),
       ('20+', 'Apps on Google Play'),
       ('500K+', 'Banking App Users'),
       ('4 Banks', 'Commercial Clients'),

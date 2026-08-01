@@ -29,9 +29,9 @@ class ExperienceScreen extends StatelessWidget {
         children: [
           SectionHeader(
             tag: 'Experience',
-            title: '5+ Years of\nBuilding at Scale',
+            title: '6+ Years of\nBuilding at Scale',
             subtitle:
-                'From Android development to leading mobile teams at banks and fintech companies serving millions of users.',
+                'From EdTech platforms and enterprise ERPs to leading mobile and backend engineering for commercial banks and FinTech enterprises.',
           ),
           const SizedBox(height: 80),
           // Timeline
