@@ -1,132 +1,118 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/core/models/project.dart';
 
-
 final clientProjects = [
   Project(
-    title: 'প্রতিদিনের দ্বীনের সাথী',
+    title: 'SponT Books',
     company: 'SponT IT',
     description:
-    'An Islamic lifestyle application providing daily religious guidance and essential Islamic resources for everyday life.',
-    imageUrl: 'assets/images/islamic.png',
-    tech: 'Flutter • SQLite',
-    isPlayStore: true,
-    links: [
-      ProjectLink(
-        'Play Store',
-        'https://play.google.com/store/apps/details?id=com.agmkhair.spontit.protidinerddinersathi&pcampaignid=web_share',
-        Icons.shop,
-      ),
-    ],
-  ),
-
-  Project(
-    title: 'BD Bazar',
-    company: 'SponT IT',
-    description:
-    'A full-featured e-commerce mobile application enabling users to browse products, manage carts, and place online orders.',
-    imageUrl: 'assets/images/bd_bazar.png',
-    tech: 'Flutter',
-    isPlayStore: true,
-    links: [
-      ProjectLink(
-        'Play Store',
-        'https://play.google.com/store/apps/details?id=com.bdbazare.userapp&pcampaignid=web_share',
-        Icons.shop,
-      ),
-    ],
-  ),
-
-
-  Project(
-    title: 'Fund Tracker',
-    company: 'SponT IT',
-    description:
-    'This project helps financial freedom and tracking to solve the plan.',
+        'Accounting and bookkeeping application for individuals and small businesses featuring income & expense tracking, PDF reports, and cloud sync.',
     imageUrl: 'assets/images/fund.png',
-    tech: 'Flutter',
+    tech: 'Flutter • Firebase • SQLite',
     isPlayStore: true,
     links: [
       ProjectLink(
         'Play Store',
-        'https://play.google.com/store/apps/details?id=com.agmkhair.finwiz.finwiz&pcampaignid=web_share',
+        'https://play.google.com/store/apps/details?id=com.agmkhair.spontit.accounting',
         Icons.shop,
       ),
     ],
   ),
-
-
-
   Project(
-    title: 'Car Rental',
+    title: 'BD BAZAR',
     company: 'SponT IT',
     description:
-    'Car Order Project',
-    imageUrl: 'assets/images/car_rant.png',
-    tech: 'Flutter',
+        'Multi-vendor eCommerce platform with product catalog, shopping cart, order management, user authentication, and REST API integration.',
+    imageUrl: 'assets/images/bd_bazar.png',
+    tech: 'Flutter • REST APIs • MySQL',
     isPlayStore: true,
     links: [
       ProjectLink(
         'Play Store',
-        'https://play.google.com/store/apps/details?id=com.agmkhair.carrental&pcampaignid=web_share',
+        'https://play.google.com/store/apps/details?id=com.bdbazare.userapp',
         Icons.shop,
       ),
     ],
   ),
-
-
   Project(
-    title: 'Pharmacy Management',
+    title: 'SponT TV',
     company: 'SponT IT',
     description:
-    'AponSeba Pharmacy Management',
+        'Live TV and IPTV media player supporting custom M3U playlists, favorites, Material 3 UI, and video playback.',
     imageUrl: 'assets/images/placeholder.png',
-    tech: 'Flutter',
+    tech: 'Flutter • Firebase • IPTV',
     isPlayStore: true,
     links: [
       ProjectLink(
         'Play Store',
-        'https://play.google.com/store/apps/details?id=com.spontit.aponseba&pcampaignid=web_share',
+        'https://play.google.com/store/apps/details?id=com.hasib.sponttv',
         Icons.shop,
       ),
     ],
   ),
-
-
-
+  Project(
+    title: 'Alphie Game',
+    company: 'SponT IT',
+    description:
+        '2D adventure and puzzle game developed using Flutter and the Flame Game Engine with custom mechanics.',
+    imageUrl: 'assets/images/placeholder.png',
+    tech: 'Flutter • Flame Engine',
+    isPlayStore: true,
+    links: [
+      ProjectLink(
+        'Play Store',
+        'https://play.google.com/store/apps/details?id=com.agmkhair.spont_it.alphie',
+        Icons.shop,
+      ),
+    ],
+  ),
+  Project(
+    title: 'Daily Deen Companion',
+    company: 'SponT IT',
+    description:
+        'Islamic lifestyle application featuring prayer times, Quran, Hadith, Duas, and Islamic calendar.',
+    imageUrl: 'assets/images/islamic.png',
+    tech: 'Flutter • Firebase • SQLite',
+    isPlayStore: true,
+    links: [
+      ProjectLink(
+        'Play Store',
+        'https://play.google.com/store/apps/details?id=com.agmkhair.spontit.protidinerddinersathi',
+        Icons.shop,
+      ),
+    ],
+  ),
 ];
-
 
 final socialProjects = [
   Project(
-    title: 'হিলফুল ফুজুল | Hilful Fuzul',
-    company: 'SponT IT',
+    title: 'Hilful Fuzul',
+    company: 'Hilful Fuzul Organization',
     description:
-    'The official app of Hilful Fuzul Samaj Kalyan Sangstha — where you will find all the necessary information about our introduction, goals, ongoing activities, routine updates, notices/announcements and support/donation in one place.',
+        'Official app for Hilful Fuzul Samaj Kalyan Sangstha — goals, activities, routine updates, notices, and community support.',
     imageUrl: 'assets/images/hilfulfuzul.png',
     tech: 'Flutter • Firebase',
     isPlayStore: true,
     links: [
       ProjectLink(
         'Play Store',
-        'https://play.google.com/store/apps/details?id=com.agmkhair.spontit.hilfulfuzul.hilful_fuzul_somaj_kollan_songstha&pcampaignid=web_share',
+        'https://play.google.com/store/apps/details?id=com.agmkhair.spontit.hilfulfuzul.hilful_fuzul_somaj_kollan_songstha',
         Icons.shop,
       ),
     ],
   ),
-
   Project(
-    title: 'Campus Blood Donorly',
-    company: 'SponT IT',
+    title: 'Campus Blood Donor',
+    company: 'Daffodil International University',
     description:
-    'Campus Blood Donorly – Give Blood, Give Hope, Save Lives.',
+        'Blood donor management application enabling students to find blood donors quickly during emergencies.',
     imageUrl: 'assets/images/diu.png',
-    tech: 'Flutter',
+    tech: 'Flutter • Firebase',
     isPlayStore: true,
     links: [
       ProjectLink(
         'Play Store',
-        'https://play.google.com/store/apps/details?id=com.spontit.agmkhair.diu_life_save&pcampaignid=web_share',
+        'https://play.google.com/store/apps/details?id=com.spontit.agmkhair.diu_life_save',
         Icons.shop,
       ),
     ],

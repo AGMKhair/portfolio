@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio/core/theme/app_theme.dart';
 import 'package:portfolio/providers/blog_provider.dart';
 import 'package:portfolio/providers/contact_provider.dart';
+import 'package:portfolio/providers/navigation_provider.dart';
 import 'package:portfolio/providers/service_provider.dart';
+import 'package:portfolio/providers/theme_provider.dart';
 import 'package:portfolio/utils/AppRoutes.dart';
 import 'package:provider/provider.dart';
-
-import 'providers/navigation_provider.dart';
 
 void main() async {
   // WidgetsFlutterBinding.ensureInitialized();
@@ -14,6 +15,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => NavigationProvider()),
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => BlogProvider()),
         ChangeNotifierProvider(create: (_) => ServiceProvider()),
         ChangeNotifierProvider(create: (_) => ContactProvider()),
@@ -28,9 +30,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = context.watch<ThemeProvider>();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'AGM Khair Sabbir',
+      title: 'AGM Khair Sabbir — Software Engineer & Product Builder',
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
+      themeMode: themeProvider.themeMode,
       initialRoute: AppRoutes.home,
       routes: AppRoutes.getRoutes(),
     );

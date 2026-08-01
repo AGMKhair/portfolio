@@ -1,154 +1,410 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:animate_do/animate_do.dart';
-import 'package:portfolio/ui/data/service_info.dart';
-import 'package:portfolio/widgets/animated_service_widget.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:portfolio/core/theme/app_colors.dart';
+import 'package:portfolio/providers/theme_provider.dart';
+import 'package:portfolio/utils/size_extensions.dart';
+import 'package:portfolio/utils/utils.dart';
+import 'package:portfolio/widgets/section_header.dart';
+import 'package:provider/provider.dart';
 
 class ServicesScreen extends StatelessWidget {
   const ServicesScreen({super.key});
 
-  void _openWhatsApp() async {
-    final uri = Uri.parse(
-      'https://wa.me/8801823585800?text=Hello%20AGM%20Khair,%20I%20found%20your%20portfolio%20and%20would%20like%20to%20discuss%20a%20project.',
+  @override
+  Widget build(BuildContext context) {
+    final isMobile = context.isMobile;
+    final isDark = context.watch<ThemeProvider>().isDark;
+
+    return Column(
+      children: [
+        _ServicesGrid(isMobile: isMobile, isDark: isDark),
+        _ProcessSection(isMobile: isMobile, isDark: isDark),
+      ],
     );
-    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
-      throw 'Could not open WhatsApp';
-    }
   }
+}
+
+class _ServicesGrid extends StatelessWidget {
+  final bool isMobile;
+  final bool isDark;
+  const _ServicesGrid({required this.isMobile, required this.isDark});
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final isMobile = width < 900;
-    const primaryColor = Color(0xFF1A237E);
-    const secondaryColor = Color(0xFFFFC107);
+    const services = [
+      (Icons.phone_android_rounded, 'Flutter Development', AppColors.accent,
+          'Cross-platform mobile apps using Flutter & Dart with Clean Architecture, Riverpod, and production-grade quality.',
+          ['Flutter', 'Dart', 'iOS', 'Android', 'Web']),
+      (Icons.dns_rounded, 'Backend Development', AppColors.accentTeal,
+          'Scalable REST APIs and microservices with Spring Boot, PostgreSQL, Firebase, and Docker.',
+          ['Spring Boot', 'PostgreSQL', 'Docker', 'REST API']),
+      (Icons.architecture_rounded, 'Architecture Consulting', Color(0xFFF59E0B),
+          'Technical architecture reviews, system design, and solution blueprinting for growing products.',
+          ['System Design', 'Clean Architecture', 'SOLID']),
+      (Icons.rocket_launch_rounded, 'MVP Development', Color(0xFFEC4899),
+          'Go from idea to a fully functional product in weeks with a focused, lean MVP strategy.',
+          ['Rapid Prototyping', 'Agile', 'End-to-End']),
+      (Icons.refresh_rounded, 'App Modernization', Color(0xFF10B981),
+          'Migrate legacy Android (Java/Kotlin) apps to Flutter or modernize existing Flutter codebases.',
+          ['Migration', 'Refactoring', 'Performance']),
+      (Icons.speed_rounded, 'Performance Optimization', Color(0xFF3B82F6),
+          'Diagnose and fix performance bottlenecks, reduce crash rates, and improve app responsiveness.',
+          ['Profiling', 'Memory', 'Rendering']),
+    ];
 
-    return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(
-        horizontal: isMobile ? 20 : 140,
-        vertical: 80,
+    return Padding(
+      padding: EdgeInsets.fromLTRB(
+        isMobile ? 24 : 80,
+        120,
+        isMobile ? 24 : 80,
+        80,
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // ===== HEADER =====
-          FadeInDown(
-            duration: const Duration(milliseconds: 800),
-            child: Column(
-              children: [
-                Text(
-                  'Professional Services',
-                  style: GoogleFonts.poppins(
-                    fontSize: isMobile ? 32 : 48,
-                    fontWeight: FontWeight.bold,
-                    color: primaryColor,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                Container(
-                  width: 80,
-                  height: 4,
-                  decoration: BoxDecoration(
-                    color: secondaryColor,
-                    borderRadius: BorderRadius.circular(2),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                SizedBox(
-                  width: isMobile ? double.infinity : 700,
-                  child: Text(
-                    'I provide high-quality development and consultation services to help businesses '
-                    'and startups achieve their goals with reliable and scalable technology.',
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.inter(
-                      fontSize: isMobile ? 15 : 18,
-                      color: Colors.blueGrey.shade700,
-                      height: 1.6,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+          const SectionHeader(
+            tag: 'Services',
+            title: 'How I Can\nHelp You',
+            subtitle:
+                'From mobile development to architecture consulting — end-to-end product engineering.',
           ),
+          const SizedBox(height: 60),
+          LayoutBuilder(builder: (context, constraints) {
+            final crossCount =
+                isMobile ? 1 : (constraints.maxWidth > 1000 ? 3 : 2);
+            return GridView.count(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              crossAxisCount: crossCount,
+              crossAxisSpacing: 20,
+              mainAxisSpacing: 20,
+              childAspectRatio: isMobile ? 2.0 : 1.6,
+              children: services
+                  .map((s) => _ServiceItem(
+                        icon: s.$1,
+                        title: s.$2,
+                        color: s.$3,
+                        desc: s.$4,
+                        tags: s.$5,
+                        isDark: isDark,
+                      ))
+                  .toList(),
+            );
+          }),
+        ],
+      ),
+    );
+  }
+}
 
-          const SizedBox(height: 80),
+class _ServiceItem extends StatefulWidget {
+  final IconData icon;
+  final String title;
+  final Color color;
+  final String desc;
+  final List<String> tags;
+  final bool isDark;
 
-          // ===== SERVICES GRID =====
-          GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: servicesData.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: isMobile ? 1 : 3,
-              crossAxisSpacing: 30,
-              mainAxisSpacing: 30,
-              childAspectRatio: isMobile ? 1.2 : 1.1,
-            ),
-            itemBuilder: (context, index) {
-              return AnimatedServiceCard(
-                service: servicesData[index],
-                delay: index * 100,
-              );
-            },
-          ),
+  const _ServiceItem({
+    required this.icon,
+    required this.title,
+    required this.color,
+    required this.desc,
+    required this.tags,
+    required this.isDark,
+  });
 
-          const SizedBox(height: 100),
+  @override
+  State<_ServiceItem> createState() => _ServiceItemState();
+}
 
-          // ===== CTA =====
-          FadeInUp(
-            duration: const Duration(milliseconds: 1000),
-            child: Container(
-              width: double.infinity,
-              padding: EdgeInsets.all(isMobile ? 32 : 60),
+class _ServiceItemState extends State<_ServiceItem> {
+  bool _hovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = widget.isDark;
+    final bgColor = isDark
+        ? (_hovered ? AppColors.bgCardHover : AppColors.bgCard)
+        : (_hovered ? AppColors.bgLightCard : AppColors.bgLightSurface);
+    final borderColor = _hovered
+        ? widget.color.withOpacity(0.3)
+        : (isDark ? AppColors.border : AppColors.borderLight);
+
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hovered = true),
+      onExit: (_) => setState(() => _hovered = false),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.all(24),
+        decoration: BoxDecoration(
+          color: bgColor,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: borderColor),
+          boxShadow: _hovered
+              ? [
+                  BoxShadow(
+                    color: widget.color.withOpacity(0.1),
+                    blurRadius: 24,
+                    offset: const Offset(0, 8),
+                  )
+                ]
+              : [],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: 44,
+              height: 44,
               decoration: BoxDecoration(
-                color: Colors.blueGrey.shade50,
-                borderRadius: BorderRadius.circular(32),
-                border: Border.all(color: Colors.blueGrey.shade100),
+                color: widget.color.withOpacity(0.12),
+                borderRadius: BorderRadius.circular(10),
               ),
-              child: Column(
+              child: Icon(widget.icon, color: widget.color, size: 22),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              widget.title,
+              style: GoogleFonts.spaceGrotesk(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: isDark ? AppColors.textPrimary : AppColors.textLightPrimary,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Expanded(
+              child: Text(
+                widget.desc,
+                style: GoogleFonts.inter(
+                  fontSize: 13,
+                  height: 1.6,
+                  color: isDark ? AppColors.textMuted : AppColors.textLightMuted,
+                ),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 4,
+              ),
+            ),
+            const SizedBox(height: 12),
+            Wrap(
+              spacing: 6,
+              runSpacing: 6,
+              children: widget.tags
+                  .map((t) => Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 3),
+                        decoration: BoxDecoration(
+                          color: widget.color.withOpacity(0.08),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Text(
+                          t,
+                          style: GoogleFonts.inter(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w500,
+                            color: widget.color,
+                          ),
+                        ),
+                      ))
+                  .toList(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ─────────────────────────────────────────────────────────
+// PROCESS
+// ─────────────────────────────────────────────────────────
+class _ProcessSection extends StatelessWidget {
+  final bool isMobile;
+  final bool isDark;
+  const _ProcessSection({required this.isMobile, required this.isDark});
+
+  @override
+  Widget build(BuildContext context) {
+    final bgColor = isDark ? AppColors.bgSurface : AppColors.bgLightCard;
+
+    const steps = [
+      (Icons.search_rounded, 'Discovery',
+          'Understanding your business goals, users, and technical constraints.'),
+      (Icons.map_rounded, 'Planning',
+          'Creating a technical roadmap, feature prioritization, and timeline estimation.'),
+      (Icons.architecture_rounded, 'Architecture',
+          'Designing a scalable, maintainable system architecture before writing code.'),
+      (Icons.code_rounded, 'Development',
+          'Building with clean code, regular reviews, and continuous progress updates.'),
+      (Icons.bug_report_rounded, 'Testing',
+          'Comprehensive unit, widget, and integration testing for production quality.'),
+      (Icons.cloud_upload_rounded, 'Deployment',
+          'CI/CD pipelines, Play Store deployment, and production release management.'),
+      (Icons.support_rounded, 'Support',
+          'Post-launch monitoring, bug fixes, and feature iterations to keep the product growing.'),
+    ];
+
+    return Container(
+      color: bgColor,
+      padding: EdgeInsets.symmetric(
+          horizontal: isMobile ? 24 : 80, vertical: isMobile ? 60 : 100),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SectionHeader(
+            tag: 'Process',
+            title: 'How I Work',
+            subtitle:
+                'A structured, transparent process from discovery to long-term support.',
+          ),
+          const SizedBox(height: 60),
+          ...steps.asMap().entries.map((entry) {
+            final i = entry.key;
+            final step = entry.value;
+            final isLast = i == steps.length - 1;
+            return _ProcessStep(
+              number: i + 1,
+              icon: step.$1,
+              title: step.$2,
+              desc: step.$3,
+              isLast: isLast,
+              isDark: isDark,
+            );
+          }),
+          const SizedBox(height: 60),
+          // CTA
+          Center(
+            child: GestureDetector(
+              onTap: () => launch(
+                  'https://wa.me/8801823585800?text=Hello%20AGM%20Khair,%20I%20would%20like%20to%20discuss%20a%20project.'),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                decoration: BoxDecoration(
+                  gradient: AppColors.accentGradient,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.accent.withOpacity(0.3),
+                      blurRadius: 20,
+                      offset: const Offset(0, 8),
+                    ),
+                  ],
+                ),
+                child: Text(
+                  "Start a Project",
+                  style: GoogleFonts.inter(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ProcessStep extends StatelessWidget {
+  final int number;
+  final IconData icon;
+  final String title;
+  final String desc;
+  final bool isLast;
+  final bool isDark;
+
+  const _ProcessStep({
+    required this.number,
+    required this.icon,
+    required this.title,
+    required this.desc,
+    required this.isLast,
+    required this.isDark,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final bgColor = isDark ? AppColors.bgCard : AppColors.bgLightSurface;
+    final borderColor = isDark ? AppColors.border : AppColors.borderLight;
+
+    return Padding(
+      padding: EdgeInsets.only(bottom: isLast ? 0 : 16),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Step indicator
+          Column(
+            children: [
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  gradient: AppColors.accentGradient,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Center(
+                  child: Text(
+                    '$number',
+                    style: GoogleFonts.spaceGrotesk(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+              if (!isLast)
+                Container(
+                  width: 2,
+                  height: 32,
+                  color: isDark ? AppColors.border : AppColors.borderLight,
+                  margin: const EdgeInsets.symmetric(vertical: 6),
+                ),
+            ],
+          ),
+          const SizedBox(width: 20),
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.all(20),
+              margin: const EdgeInsets.only(bottom: 8),
+              decoration: BoxDecoration(
+                color: bgColor,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: borderColor),
+              ),
+              child: Row(
                 children: [
-                  Text(
-                    'Have a specific project in mind?',
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.poppins(
-                      fontSize: isMobile ? 24 : 36,
-                      fontWeight: FontWeight.bold,
-                      color: primaryColor,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    'I am available for freelance projects and technical consultation. '
-                    'Let’s build something great together.',
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.inter(
-                      fontSize: isMobile ? 15 : 18,
-                      color: Colors.blueGrey.shade700,
-                    ),
-                  ),
-                  const SizedBox(height: 40),
-                  ElevatedButton.icon(
-                    onPressed: _openWhatsApp,
-                    icon: const Icon(Icons.chat_bubble_outline),
-                    label: Text(
-                      'Let’s Talk on WhatsApp',
-                      style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18,
-                      ),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: primaryColor,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 40,
-                        vertical: 22,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      elevation: 4,
+                  Icon(icon,
+                      color: AppColors.accent, size: 20),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          style: GoogleFonts.spaceGrotesk(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                            color: isDark
+                                ? AppColors.textPrimary
+                                : AppColors.textLightPrimary,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          desc,
+                          style: GoogleFonts.inter(
+                            fontSize: 13,
+                            height: 1.5,
+                            color: isDark
+                                ? AppColors.textMuted
+                                : AppColors.textLightMuted,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class Project {
   final String title;
   final String description;
-  final String tech;
+  final String? tech;
   final String imageUrl;
   final String? company;
   final bool isPlayStore;
@@ -12,11 +12,11 @@ class Project {
   Project({
     required this.title,
     required this.description,
-    required this.tech,
+    this.tech,
     required this.imageUrl,
     this.company,
     this.isPlayStore = false,
-    required this.links,
+    this.links = const [],
   });
 }
 

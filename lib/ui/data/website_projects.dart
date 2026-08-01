@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/core/models/project.dart';
-import '../views/projects_screen.dart';
 
 final websiteProjects = [
   Project(

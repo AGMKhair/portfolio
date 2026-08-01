@@ -94,7 +94,7 @@ class ProjectCardState extends State<ProjectCard> {
                         Wrap(
                           spacing: 6,
                           runSpacing: 6,
-                          children: widget.project.tech.split(',').take(2).map((tech) {
+                          children: (widget.project.tech ?? '').split(',').take(2).map((tech) {
                             return Container(
                               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                               decoration: BoxDecoration(
@@ -155,7 +155,7 @@ class ProjectCardState extends State<ProjectCard> {
                           alignment: WrapAlignment.center,
                           spacing: 8,
                           runSpacing: 8,
-                          children: widget.project.tech.split(',').map((tech) {
+                          children: (widget.project.tech ?? '').split(',').map((tech) {
                             return Container(
                               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                               decoration: BoxDecoration(
